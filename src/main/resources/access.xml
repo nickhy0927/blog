@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<app>
+	<path serviceCode="S00001" serviceName="appUserLoginService">
+		<method methodCode="S00001-M00001">userLogin</method>
+		<method methodCode="S00001-M00002">userInfoList</method>
+		<method methodCode="S00001-M00003">updateUserTag</method>
+	</path>
+</app>

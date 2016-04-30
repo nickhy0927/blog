@@ -1,0 +1,50 @@
+#bg {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 1001;
+    -moz-opacity: 0.7;
+    opacity: .70;
+    filter: alpha(opacity=70);
+}
+
+#show {
+    display: none;
+    position: absolute;
+    top: 38%;
+    left: 34%;
+    width: 450px;
+    height: 160px;
+    /*padding: 8px;*/
+    border: 8px solid #2a74ea;
+    background-color: white;
+    z-index: 1002;
+    overflow: auto;
+}
+
+.dialog-title {
+    height: 20px;;
+    width: 100%;
+    display: block;
+    background: #2a74ea;
+    border-bottom: 8px solid #2a74ea;
+    color: white;
+    font-weight: bold
+}
+
+.dialog-content {
+    width: 100%;
+    height: 120px;;
+    line-height: 120px;
+    text-align: center
+}
+
+.dialog-close {
+    color: #FFFFFF;
+    float: right;
+    display: none
+}
