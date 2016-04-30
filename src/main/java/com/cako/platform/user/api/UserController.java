@@ -74,7 +74,7 @@ public class UserController extends BaseController {
         return "admin/platform/user/create";
     }
 
-    @RequestMapping(value = "/user/userEdit/{id}")
+    @RequestMapping(value = "/user/edit/{id}.html")
     public String userEdit(@PathVariable("id") String id, HttpServletRequest request, Model model) {
         if (StringUtils.isNotEmpty(id)) {
             try {
@@ -85,7 +85,7 @@ public class UserController extends BaseController {
             }
 
         }
-        return "platform/user/userUpdate";
+        return "admin/platform/user/create";
     }
 
     @RequestMapping(value = "/user/list.html", method = RequestMethod.GET)

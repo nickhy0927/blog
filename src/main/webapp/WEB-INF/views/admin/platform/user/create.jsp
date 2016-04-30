@@ -48,8 +48,9 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nickName">用户昵称</label>
                         <div class="col-sm-9">
+                            <input type="hidden" id="id" name="id" value="${user.id}"/>
                             <input type="text" id="nickName" name="nickName"
-                                   datatype="z2-18"
+                                   datatype="z2-18" value="${user.nickName}"
                                    nullmsg="请输入昵称！" errormsg="昵称至少2个字符,最多18个字符！"
                                    placeholder="请输入用户昵称" class="col-xs-10 col-sm-5" />
                             <span class="middle Validform_checktip"></span>
@@ -67,31 +68,35 @@
                         </div>
                     </div>
                     <div class="space-4"></div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="password">登录密码</label>
-                        <div class="col-sm-9">
-                            <input type="password" id="password"
-                                   name="password"
-                                   datatype="*6-20" nullmsg="请设置密码！"
-                                   errormsg="密码范围在6~20位之间！"
-                                   placeholder="请输入登录密码" class="col-xs-10 col-sm-5" />
-                            <span class="middle Validform_checktip"></span>
+                    <c:if test="${user.id eq '' || user.id == null}">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="password">登录密码</label>
+                            <div class="col-sm-9">
+                                <input type="password" id="password"
+                                       name="password"
+                                       datatype="*6-20" nullmsg="请设置密码！"
+                                       errormsg="密码范围在6~20位之间！"
+                                       placeholder="请输入登录密码" class="col-xs-10 col-sm-5" />
+                                <span class="middle Validform_checktip"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="spassword">确认密码</label>
-                        <div class="col-sm-9">
-                            <input type="password" id="spassword"
-                                   datatype="spassword,*"
-                                   nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！"
-                                   placeholder="请输入确认密码" class="col-xs-10 col-sm-5" />
-                            <span class="middle Validform_checktip"></span>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="spassword">确认密码</label>
+                            <div class="col-sm-9">
+                                <input type="password" id="spassword"
+                                       datatype="spassword,*"
+                                       nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！"
+                                       placeholder="请输入确认密码" class="col-xs-10 col-sm-5" />
+                                <span class="middle Validform_checktip"></span>
+                            </div>
                         </div>
-                    </div>
+                    </c:if>
                     <div class="form-group">
                         <label for="email" class="col-sm-3 control-label no-padding-right">用户邮箱</label>
                         <div class="col-sm-9">
                             <input type="text" name="email"
+                                   value="${user.email}"
                                    id="email" placeholder="请输入用户邮箱"
                                    datatype="email" nullmsg="请输入邮箱地址"
                                    errormsg="邮箱地址不正确" class="col-xs-10 col-sm-5" >
@@ -102,6 +107,7 @@
                         <label class="col-sm-3 control-label no-padding-right" for="brithday">出生日期</label>
                         <div class="col-sm-9 ">
                             <input type="text" id="brithday"
+                                   value="${user.brithday}"
                                    datatype="brithday" nullmsg="请输入出生日期"
                                    name="brithday" placeholder="请输入出生日期" class="col-xs-10 col-sm-5" />
                             <span class="middle Validform_checktip"></span>
@@ -113,7 +119,7 @@
                             <select name="userTypes" datatype="*" nullmsg="请选择用户类型" class="width-40 chosen-select" data-placeholder="Choose a Country...">
                                 <option value="">&nbsp;</option>
                                 <c:forEach items="${userTypeList}" var="type">
-                                    <option value="${type.key}">${type.name}</option>
+                                    <option value="${type.key}" <c:if test="${user.userType==type.key}">selected="selected"</c:if> >${type.name}</option>
                                 </c:forEach>
                             </select>
                         </div>

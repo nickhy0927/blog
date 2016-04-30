@@ -105,7 +105,7 @@
                                     </c:choose>
                                 </td>
                                 <td style="text-align: center;width:140px;">
-                                    <a href="${ctx}/platform/user/userEdit/${user.id}">修改</a>
+                                    <a href="${ctx}/admin/platform/user/edit/${user.id}.html">修改</a>
                                     <a href="javascript:void(0)" onclick="deleteInfo('${entity.id}','${depart.id}')">删除</a>
                                     <a href="${ctx}/platform/user/userAddRoles/${user.id}">添加角色</a>
                                 </td>
