@@ -9,7 +9,7 @@
 <%@page import="com.cako.basic.topic.column.service.ColumnService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.hy.include" prefix="hy" %>
+<%@ taglib uri="https://www.hy.include" prefix="hy" %>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <!DOCTYPE html>
 
@@ -217,7 +217,7 @@
 	        		if(user == null){
 	        	%>
 	        		游客
-	        		<a <a href="#myModal" role="button" class="btn" data-toggle="modal">[ 登录</a>|&nbsp;&nbsp;
+	        		<a href="#myModal" role="button" class="btn" data-toggle="modal">[ 登录</a>|&nbsp;&nbsp;
 	        	<%	
 	        		} else {
 	        	%>

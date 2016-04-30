@@ -1,4 +1,4 @@
-package com.cako.platform.utils;
+package com.orm.commons.utils;
 
 public class Utils {
 	public static String BLOCK = "__jsp_override__";

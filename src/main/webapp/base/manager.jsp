@@ -1,9 +1,6 @@
-<%@page import="com.cako.platform.utils.GlobalVariable"%>
-<%@page import="com.cako.platform.user.entity.User"%>
-<%@page import="org.springframework.data.domain.Sort"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.hy.include" prefix="hy" %>
+<%@ taglib uri="https://www.hy.include" prefix="hy" %>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <!DOCTYPE html>
 <html>
