@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.orm.commons.utils.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ import com.orm.enums.SysEnum;
 import com.orm.enums.SysEnum.DeleteStatus;
 
 @Controller
-@RequestMapping(value = "/platform")
+@RequestMapping(value = "/admin/platform")
 public class UserController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -66,10 +67,11 @@ public class UserController extends BaseController {
         return "platform/user/userAddRole";
     }
 
-    @RequestMapping(value = "/user/userCreate")
+    @RequestMapping(value = "/user/create.html")
     public String userCreate(HttpServletRequest request, Model model) {
-
-        return "platform/user/userCreate";
+        List<Map<String,Object>> userTypeList = SysEnum.getUserType();
+        request.setAttribute("userTypeList",userTypeList);
+        return "admin/platform/user/create";
     }
 
     @RequestMapping(value = "/user/userEdit/{id}")
@@ -86,7 +88,7 @@ public class UserController extends BaseController {
         return "platform/user/userUpdate";
     }
 
-    @RequestMapping(value = "/user/userList", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/list.html", method = RequestMethod.GET)
     public String userList(HttpServletRequest request, Model model) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
         String currentPage = request.getParameter("currentPage");
@@ -103,7 +105,7 @@ public class UserController extends BaseController {
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        return "platform/user/userList";
+        return "admin/platform/user/list";
     }
 
     @RequestMapping(value = "/user/addRole/{id}", method = RequestMethod.POST)
@@ -146,16 +148,49 @@ public class UserController extends BaseController {
 
     }
 
-    @RequestMapping(value = "/user/userSave", method = RequestMethod.POST)
-    public String userSave(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/user/save.html", method = RequestMethod.POST)
+    public void userSave(HttpServletRequest request, HttpServletResponse response) {
+        Map<String,Object> map = new HashMap<String,Object>();
         try {
+            String userTypes = request.getParameter("userTypes");
             User user = (User) BeanToMapUtil.getBeenObjectByRequest(new User(), request);
             user.setPassword(MD5Encryption.MD5(user.getPassword()));
+            user.setUserType(SysEnum.getUserTypeByName(userTypes));
             user = userService.save(user);
             System.out.println(user);
+            map.put("info","新增成功");
+            map.put("status","y");
         } catch (Exception e) {
-
+            e.printStackTrace();
+            map.put("info","新增失败");
+            map.put("status","n");
+        } finally {
+            try {
+                response.setContentType("text/html;charset=utf-8");
+                response.getWriter().write(new JsonMapper().toJson(map));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return "redirect:/platform/user/userList";
+    }
+
+    @RequestMapping(value = "/user/validLoginName.json", method = {RequestMethod.POST,RequestMethod.GET})
+    public void validLoginName(HttpServletRequest request,HttpServletResponse response) {
+        String loginName = request.getParameter("param");
+        User user = userService.findUserByLoginName(loginName);
+        Map<String,Object> map = new HashMap<String,Object>();
+        if (user == null) {
+            map.put("info","该用户可以使用.");
+            map.put("status","y");
+        } else {
+            map.put("info","该用户已存在，请更换其他的账号注册.");
+            map.put("status","n");
+        }
+        try {
+            response.setContentType("text/html;charset=utf-8");
+            response.getWriter().write(new JsonMapper().toJson(map));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

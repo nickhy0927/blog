@@ -4,7 +4,7 @@
 	version="2.1">
 	<tlib-version>1.0</tlib-version>
 	<short-name>page</short-name>
-	<uri>http://caokopage.com.page</uri>
+	<uri>https://caokopage.com.page</uri>
 	<tag>
 		<name>pageInfo</name>
 		<tag-class>com.orm.commons.utils.CurtainPage</tag-class> <!--这里是自定义标签类的完整类名:我这里是PageTag-->

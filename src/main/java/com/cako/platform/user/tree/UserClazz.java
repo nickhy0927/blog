@@ -22,6 +22,7 @@ public class UserClazz {
 	protected Date updateTime;
 	private String userStatus;// 用户状态
 	private String userType;// 用户类型
+	private String userTag;//用户手机端的标识
 
 	public UserClazz(User user) {
 		this.id = user.getId();
@@ -58,6 +59,16 @@ public class UserClazz {
 		} else if (user.getUserStatus() == Status.NORMAL) {
 			this.userStatus = "NORMAL";
 		}
+		this.userTag = user.getUserTag();
+	}
+
+
+	public String getUserTag() {
+		return userTag;
+	}
+
+	public void setUserTag(String userTag) {
+		this.userTag = userTag;
 	}
 
 	public String getBrithday() {

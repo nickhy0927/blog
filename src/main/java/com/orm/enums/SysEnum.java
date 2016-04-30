@@ -1,6 +1,12 @@
 package com.orm.enums;
 
+import com.cako.platform.user.entity.User;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SysEnum {
 
@@ -74,5 +80,38 @@ public class SysEnum {
 	 */
 	public static enum UserType {
 		ADMIN, GENERAL, LEAGUER_MEMBER, MEMBER;
+	}
+
+	public static UserType getUserTypeByName(String userType) {
+		if ("ADMIN".equals(userType)) {
+			return UserType.ADMIN;
+		} else if ("GENERAL".equals(userType)) {
+			return UserType.GENERAL;
+		} else if ("LEAGUER_MEMBER".equals(userType)) {
+			return UserType.LEAGUER_MEMBER;
+		} else if ("MEMBER".equals(userType)) {
+			return UserType.MEMBER;
+		}
+		return UserType.GENERAL;
+	}
+	public static List<Map<String,Object>> getUserType() {
+		Map<String,Object> map = new HashMap<String,Object>();
+		List<Map<String,Object>> mapList = new ArrayList<Map<String,Object>>();
+		map.put("name","管理员");
+		map.put("key","ADMIN");
+		mapList.add(map);
+		map = new HashMap<String,Object>();
+		map.put("name","普通用户");
+		map.put("key","GENERAL");
+		mapList.add(map);
+		map = new HashMap<String,Object>();
+		map.put("key","LEAGUER_MEMBER");
+		map.put("name","超级会员");
+		mapList.add(map);
+		map = new HashMap<String,Object>();
+		map.put("name","普通会员");
+		map.put("key","MEMBER");
+		mapList.add(map);
+		return mapList;
 	}
 }
