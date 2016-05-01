@@ -22,6 +22,7 @@ import com.cako.platform.role.entity.Role;
 import com.cako.platform.role.service.RoleService;
 import com.cako.platform.utils.BaseController;
 import com.orm.commons.exception.ServiceException;
+import com.orm.commons.utils.MessageObject;
 import com.orm.commons.utils.ObjectTools;
 import com.orm.enums.SysEnum.DeleteStatus;
 
@@ -29,17 +30,17 @@ import com.orm.enums.SysEnum.DeleteStatus;
  * Created by Curtain on 2015/9/21.
  */
 @Controller
-@RequestMapping(value = "/platform")
+@RequestMapping(value = "/admin/platform")
 public class RoleController extends BaseController {
 
 	@Autowired
 	private RoleService roleService;
 
-	@RequestMapping(value = "/role/roleCreate", method = RequestMethod.GET)
+	@RequestMapping(value = "/role/create.html", method = RequestMethod.GET)
 	public String roleCreate(HttpServletRequest request, Model model) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		model.addAttribute("code", sdf.format(new Date()));
-		return "/platform/role/roleCreate";
+		return "admin/platform/role/create";
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class RoleController extends BaseController {
 	 * @param id
 	 * @param response
 	 */
-	@RequestMapping(value = "/role/roleDelete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/role/delete/{id}.html", method = RequestMethod.GET)
 	public void roleDelete(@PathVariable("id") String id, HttpServletResponse response) {
 		try {
 			if (StringUtils.isNotEmpty(id)) {
@@ -60,13 +61,13 @@ public class RoleController extends BaseController {
 					roleService.save(role);
 					message.setInforMessage("角色删除成功");
 				} else {
-					message.setErrorMessage("角色删除失败");
+					message.setErrorMessage("角色删除失败，请稍后再试");
 				}
 			} else {
-				message.setErrorMessage("角色删除失败");
+				message.setErrorMessage("角色删除失败，请稍后再试");
 			}
 		} catch (ServiceException e) {
-			message.setErrorMessage("角色删除失败");
+			message.setErrorMessage("角色删除失败，请稍后再试");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -85,7 +86,7 @@ public class RoleController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/role/roleEdit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/role/edit/{id}.html", method = RequestMethod.GET)
 	public String roleEdit(@PathVariable("id") String id, Model model) {
 		try {
 			if (StringUtils.isNotEmpty(id)) {
@@ -95,7 +96,7 @@ public class RoleController extends BaseController {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
-		return "/platform/role/roleUpdate";
+		return "admin/platform/role/create";
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class RoleController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/role/roleList", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/role/list.html", method = { RequestMethod.POST, RequestMethod.GET })
 	public String roleList(HttpServletRequest request, Model model) {
 		String currentPage = request.getParameter("currentPage");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -119,7 +120,7 @@ public class RoleController extends BaseController {
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
-		return "platform/role/roleList";
+		return "admin/platform/role/list";
 	}
 
 	/**
@@ -131,13 +132,22 @@ public class RoleController extends BaseController {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping(value = "/role/roleSave", method = RequestMethod.POST)
-	public String roleSave(HttpServletRequest request, Model model, Role role) {
+	@RequestMapping(value = "/role/save", method = RequestMethod.POST)
+	public void roleSave(HttpServletRequest request,HttpServletResponse response, Role role) {
+		MessageObject message = new MessageObject();
 		try {
 			roleService.save(role);
+			message.setInforMessage("新增角色成功");
 		} catch (ServiceException e) {
 			e.printStackTrace();
+			message.setErrorMessage("新增角色失败");
+		} finally {
+			response.setHeader("ContentType", "text/html;charset=UTF-8");
+			try {
+				response.getWriter().write(message.getJsonMapper(message));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return "redirect:roleList";
 	}
 }
