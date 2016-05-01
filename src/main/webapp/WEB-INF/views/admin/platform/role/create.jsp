@@ -45,31 +45,22 @@
                 <!-- PAGE CONTENT BEGINS -->
                 <form class="form-horizontal" action="${ctx}/admin/platform/role/save.html" id="createForm" role="form" method="post">
                    	<div class="form-group">
-                        <label for="email" class="col-sm-3 control-label no-padding-right">用户邮箱</label>
+                        <label for="code" class="col-sm-3 control-label no-padding-right">角色编号</label>
                         <div class="col-sm-9">
-                            <input type="text" name="code"
-                                   value="${role.code}"class="col-xs-10 col-sm-5" >
+                            <input type="text" name="code" id="code"
+                                   readonly="readonly"
+                                   value="${code}"class="col-xs-10 col-sm-5" >
                         </div>
                     </div>
                     <div class="space-4"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nickName">角色名称</label>
+                        <label class="col-sm-3 control-label no-padding-right" for="name">角色名称</label>
                         <div class="col-sm-9">
                             <input type="hidden" id="id" name="id" value="${role.id}"/>
                             <input type="text" id="name" name="name"
                                    datatype="s2-18" value="${role.name}"
                                    nullmsg="请输入角色名称！" errormsg="角色名称至少2个字符,最多18个字符！"
                                    placeholder="请输入角色名称" class="col-xs-10 col-sm-5" />
-                            <span class="middle Validform_checktip"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="brithday">出生日期</label>
-                        <div class="col-sm-9 ">
-                            <input type="text" id="brithday"
-                                   value="${user.brithday}"
-                                   datatype="brithday" nullmsg="请输入出生日期"
-                                   name="brithday" placeholder="请输入出生日期" class="col-xs-10 col-sm-5" />
                             <span class="middle Validform_checktip"></span>
                         </div>
                     </div>
@@ -80,14 +71,14 @@
                                	 提交
                             </button>
                             &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset">
+                            <button class="btn btn-danger" type="reset">
                                 <i class="icon-undo bigger-110"></i>
-                                                                               重置
+                                重置
                             </button>
                             &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="button">
-                                <i class="icon-undo bigger-110"></i>
-                                                                               返回
+                            <button class="btn" type="button" onclick="history.go(-1)">
+                                <i class="icon-backward bigger-110"></i>
+                                返回
                             </button>
                         </div>
                     </div>
@@ -122,42 +113,6 @@
                 tiptype:3,
                 showAllError:true,
                 ajaxPost:true,
-                datatype: {
-                    "spassword":function(gets){
-                        if(gets!=$("#password").val()){
-                            return "两次输入的密码不一致！";
-                        }
-                    },
-                    "z2-18" : function (value,obj) {
-                        var len = value.length;
-                        if (len<2||len>18) {
-                            return "昵称至少2个字符,最多18个字符！";
-                        }
-                        return /[\u4E00-\u9FA5\uF900-\uFA2D]/.test(value) ? true : "请输入中文！"
-                    },
-                    "loginName":function(value){
-                        var usern = /^[a-zA-Z0-9_]{1,}$/;
-                        if(!usern.test(value)){
-                            return "登录名称必须由数字、下划线、字母组成！";
-                        }
-                    },
-                    "email":function(value){
-                        var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-                        if(!reg.test(value)){
-                            return "用户邮箱地址格式不正确";
-                        }
-                    },
-                    "brithday":function(value){
-                        if(value == ''){
-                            return "请输入出生日期!";
-                        }
-                        var a = /^(\d{4})-(\d{2})-(\d{2})$/
-                        if (!a.test(value)) {
-                            return "日期格式不正确!";
-                        }
-                    }
-                    
-                },
                 beforeSubmit:function(curform){
                    showdiv();
                 },
@@ -173,7 +128,7 @@
                     hidediv();
                     if (data.status == 'y') {
                         alert(data.info);
-                        window.location.href="${ctx}/admin/platform/user/list.html";
+                        window.location.href="${ctx}/admin/platform/role/list.html";
                     } else {
                         alert(data.info);
                         return false;

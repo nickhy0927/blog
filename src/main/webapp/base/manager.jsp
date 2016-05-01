@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/Validform/css/style.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/Validform/css/demo.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/ztree/css/zTreeStyle/zTreeStyle.css">
     <!-- basic styles -->
     <link rel="stylesheet" href="${ctx}/static/font-awesome/css/font-awesome.css"/>
     <!--[if IE 7]>
@@ -69,7 +68,6 @@
     <!-- inline styles related to this page -->
     <!-- 填充css代码 -->
     <hy:block name="css"></hy:block>
-
     <script type="text/javascript" src="${ctx}/static/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/Validform/js/Validform_v5.3.2.js"></script>
@@ -795,12 +793,6 @@
 </div>
 <!-- basic scripts -->
 
-<!--[if !IE]> -->
-
-<script src="${ctx}/static/admin/js/jquery.min.js"></script>
-
-<!-- <![endif]-->
-
 <!--[if IE]>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <![endif]-->
@@ -812,12 +804,6 @@
 </script>
 
 <!-- <![endif]-->
-
-<!--[if IE]>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='${ctx}/static/admin/js/jquery-1.10.2.min.js'>" + "<" + "script>");
-</script>
-<![endif]-->
 
 <script type="text/javascript">
     if ("ontouchend" in document) document.write("<script src='${ctx}/static/admin/js/jquery.mobile.custom.min.js'>" + "<" + "script>");

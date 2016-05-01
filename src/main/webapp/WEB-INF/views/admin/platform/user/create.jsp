@@ -131,12 +131,17 @@
                         <div class="col-md-offset-3 col-md-9">
                             <button class="btn btn-info" type="submit">
                                 <i class="icon-ok bigger-110"></i>
-                                                                            提交
+                                提交
                             </button>
                             &nbsp; &nbsp; &nbsp;
-                            <button class="btn" type="reset">
+                            <button class="btn btn-danger" type="reset">
                                 <i class="icon-undo bigger-110"></i>
                                 重置
+                            </button>
+                            &nbsp; &nbsp; &nbsp;
+                            <button class="btn" type="button" onclick="history.go(-1)">
+                                <i class="icon-backward bigger-110"></i>
+                                返回
                             </button>
                         </div>
                     </div>

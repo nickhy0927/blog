@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.orm.commons.utils.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -129,23 +130,23 @@ public class RoleController extends BaseController {
 	 * @author HUANGYUAN
 	 * @TIME:2015年9月21日 下午10:59:21
 	 * @param request
-	 * @param model
 	 * @param role
 	 * @return
 	 */
 	@RequestMapping(value = "/role/save", method = RequestMethod.POST)
-	public void roleSave(HttpServletRequest request,HttpServletResponse response, Role role) {
-		MessageObject message = new MessageObject();
+	public void roleSave(HttpServletResponse response, Role role) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			roleService.save(role);
-			message.setInforMessage("新增角色成功");
-		} catch (ServiceException e) {
+			roleService.save(role);map.put("info", "新增成功");
+			map.put("status", "y");
+		} catch (Exception e) {
 			e.printStackTrace();
-			message.setErrorMessage("新增角色失败");
+			map.put("info", "新增失败");
+			map.put("status", "n");
 		} finally {
 			response.setHeader("ContentType", "text/html;charset=UTF-8");
 			try {
-				response.getWriter().write(message.getJsonMapper(message));
+				response.getWriter().write(new JsonMapper().toJson(map));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
