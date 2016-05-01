@@ -24,6 +24,7 @@ import com.cako.platform.utils.BaseController;
 import com.orm.commons.exception.ServiceException;
 import com.orm.commons.utils.MessageObject;
 import com.orm.commons.utils.ObjectTools;
+import com.orm.commons.utils.Pager;
 import com.orm.enums.SysEnum.DeleteStatus;
 
 /**
@@ -115,8 +116,8 @@ public class RoleController extends BaseController {
 		try {
 			ObjectTools<Role> tools = roleService.queryPageByMap(map, currentPage, new Sort(Sort.Direction.DESC, "createTime"));
 			model.addAttribute("rolesList", tools.getEntities());
-			model.addAttribute("tools", tools);
 			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("pager", tools.getEntities().size() > 0 ? tools.getPager() : new Pager(0, "10"));
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}

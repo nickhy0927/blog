@@ -431,9 +431,9 @@
                 </li>
 
                 <li>
-                    <a href="typography.html">
+                    <a href="${ctx}/admin/platform/role/list.html">
                         <i class="icon-text-width"></i>
-                        <span class="menu-text">栏目管理</span>
+                        <span class="menu-text">角色管理</span>
                     </a>
                 </li>
 
