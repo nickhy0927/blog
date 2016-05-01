@@ -80,6 +80,10 @@ public class UserController extends BaseController {
             try {
                 User user = userService.get(id);
                 model.addAttribute("user", user);
+                model.addAttribute("userType", user.getUserType());
+
+                List<Map<String,Object>> userTypeList = SysEnum.getUserType();
+                model.addAttribute("userTypeList",userTypeList);
             } catch (ServiceException e) {
                 e.printStackTrace();
             }

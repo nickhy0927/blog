@@ -60,6 +60,7 @@
                         <label class="col-sm-3 control-label no-padding-right" for="loginName">登录账号</label>
                         <div class="col-sm-9">
                             <input type="text" id="loginName"
+                                   value="${user.loginName}"
                                    ajaxurl="${ctx}/admin/platform/user/validLoginName.json"
                                    datatype="*6-20,loginName" nullmsg="请输入登录名称！"
                                    errormsg="登录名称范围在6~20位之间数字、下划线、字母组合"
@@ -116,10 +117,10 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="brithday">用户类型</label>
                         <div class="col-sm-9 ">
-                            <select name="userTypes" datatype="*" nullmsg="请选择用户类型" class="width-40 chosen-select" data-placeholder="Choose a Country...">
+                            <select name="userTypes" datatype="*" nullmsg="请选择用户类型" class="width-40 chosen-select">
                                 <option value="">&nbsp;</option>
                                 <c:forEach items="${userTypeList}" var="type">
-                                    <option value="${type.key}" <c:if test="${user.userType==type.key}">selected="selected"</c:if> >${type.name}</option>
+                                    <option value="${type.key}" <c:if test="${userType == type.key}">selected="selected"</c:if> >${type.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
