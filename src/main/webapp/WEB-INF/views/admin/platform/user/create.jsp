@@ -61,7 +61,10 @@
                         <div class="col-sm-9">
                             <input type="text" id="loginName"
                                    value="${user.loginName}"
-                                   ajaxurl="${ctx}/admin/platform/user/validLoginName.json"
+                                   readonly="readonly"
+                                   <c:if test="${user.id eq '' || user.id == null}">
+	                                   ajaxurl="${ctx}/admin/platform/user/validLoginName.json"
+                                   </c:if>
                                    datatype="*6-20,loginName" nullmsg="请输入登录名称！"
                                    errormsg="登录名称范围在6~20位之间数字、下划线、字母组合"
                                    name="loginName" placeholder="请输入登录账号" class="col-xs-10 col-sm-5" />
@@ -70,7 +73,6 @@
                     </div>
                     <div class="space-4"></div>
                     <c:if test="${user.id eq '' || user.id == null}">
-
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="password">登录密码</label>
                             <div class="col-sm-9">
@@ -176,8 +178,8 @@
                         }
                     },
                     "z2-18" : function (value,obj) {
-                        var length = value.length;
-                        if (length < 2 || length > 18) {
+                        var len = value.length;
+                        if (len<2||len>18) {
                             return "昵称至少2个字符,最多18个字符！";
                         }
                         return /[\u4E00-\u9FA5\uF900-\uFA2D]/.test(value) ? true : "请输入中文！"

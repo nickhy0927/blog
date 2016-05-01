@@ -110,7 +110,7 @@
             <a href="#" class="navbar-brand">
                 <small>
                     <i class="icon-leaf"></i>
-                    ACE后台管理系统
+                   	博客系统
                 </small>
             </a><!-- /.brand -->
         </div><!-- /.navbar-header -->
@@ -126,7 +126,7 @@
                     <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
                         <li class="dropdown-header">
                             <i class="icon-ok"></i>
-                            还有4个任务完成
+                                                                    还有4个任务完成
                         </li>
 
                         <li>
@@ -270,17 +270,17 @@
                             <a href="#">
                                 <img src="${ctx}/static/admin/avatars/avatar.png" class="msg-photo"
                                      alt="Alex's Avatar"/>
-										<span class="msg-body">
-											<span class="msg-title">
-												<span class="blue">Alex:</span>
-												不知道写啥 ...
-											</span>
+								<span class="msg-body">
+									<span class="msg-title">
+										<span class="blue">Alex:</span>
+										不知道写啥 ...
+									</span>
 
-											<span class="msg-time">
-												<i class="icon-time"></i>
-												<span>1分钟以前</span>
-											</span>
-										</span>
+									<span class="msg-time">
+										<i class="icon-time"></i>
+										<span>1分钟以前</span>
+									</span>
+								</span>
                             </a>
                         </li>
 
@@ -306,17 +306,17 @@
                             <a href="#">
                                 <img src="${ctx}/static/admin/avatars/avatar4.png" class="msg-photo"
                                      alt="Bob's Avatar"/>
-										<span class="msg-body">
-											<span class="msg-title">
-												<span class="blue">Bob:</span>
-												到底是不是英文 ...
-											</span>
+								<span class="msg-body">
+									<span class="msg-title">
+										<span class="blue">Bob:</span>
+										到底是不是英文 ...
+									</span>
 
-											<span class="msg-time">
-												<i class="icon-time"></i>
-												<span>下午3:15</span>
-											</span>
-										</span>
+									<span class="msg-time">
+										<i class="icon-time"></i>
+										<span>下午3:15</span>
+									</span>
+								</span>
                             </a>
                         </li>
 
@@ -382,7 +382,6 @@
         <a class="menu-toggler" id="menu-toggler" href="#">
             <span class="menu-text"></span>
         </a>
-
         <div class="sidebar" id="sidebar">
             <script type="text/javascript">
                 try {
@@ -396,7 +395,6 @@
                     <button class="btn btn-success">
                         <i class="icon-signal"></i>
                     </button>
-
                     <button class="btn btn-info">
                         <i class="icon-pencil"></i>
                     </button>
@@ -412,11 +410,8 @@
 
                 <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
                     <span class="btn btn-success"></span>
-
                     <span class="btn btn-info"></span>
-
                     <span class="btn btn-warning"></span>
-
                     <span class="btn btn-danger"></span>
                 </div>
             </div><!-- #sidebar-shortcuts -->
@@ -438,7 +433,7 @@
                 <li>
                     <a href="typography.html">
                         <i class="icon-text-width"></i>
-                        <span class="menu-text"> 文字排版 </span>
+                        <span class="menu-text">栏目管理</span>
                     </a>
                 </li>
 
