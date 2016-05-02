@@ -94,6 +94,7 @@ public class RoleController extends BaseController {
 			if (StringUtils.isNotEmpty(id)) {
 				Role role = roleService.get(id);
 				model.addAttribute("role", role);
+				model.addAttribute("code", role.getCode());
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
@@ -129,7 +130,6 @@ public class RoleController extends BaseController {
 	 * @描述：保存角色
 	 * @author HUANGYUAN
 	 * @TIME:2015年9月21日 下午10:59:21
-	 * @param request
 	 * @param role
 	 * @return
 	 */

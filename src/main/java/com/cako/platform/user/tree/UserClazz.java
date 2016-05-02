@@ -23,6 +23,7 @@ public class UserClazz {
 	private String userStatus;// 用户状态
 	private String userType;// 用户类型
 	private String userTag;//用户手机端的标识
+	private String resources;
 
 	public UserClazz(User user) {
 		this.id = user.getId();
@@ -60,8 +61,16 @@ public class UserClazz {
 			this.userStatus = "NORMAL";
 		}
 		this.userTag = user.getUserTag();
+		this.resources = user.getResources();
 	}
 
+	public String getResources() {
+		return resources;
+	}
+
+	public void setResources(String resources) {
+		this.resources = resources;
+	}
 
 	public String getUserTag() {
 		return userTag;

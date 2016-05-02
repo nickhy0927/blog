@@ -53,7 +53,7 @@ public class IndexController {
             logger.info(e.getMessage());
             e.printStackTrace();
         }
-        return "outerPage";
+        return "bbs/index";
     }
 
     @RequestMapping(value = "/outLink/index", method = RequestMethod.GET)

@@ -4,7 +4,6 @@
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <hy:extends name="title">博客管理系统</hy:extends>
 <hy:extends name="css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/main/css/admin.css">
     <style type="text/css">
         .Validform_checktip {
             line-height: 30px;
@@ -16,14 +15,8 @@
     <script type="text/javascript">
         if("ontouchend" in document) document.write("<script src='${ctx}/static/admin/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
     </script>
-    <script src="${ctx}/static/admin/js/bootstrap.min.js"></script>
-    <script src="${ctx}/static/admin/js/typeahead-bs2.min.js"></script>
-
-    <!-- page specific plugin scripts -->
-
-    <!--[if lte IE 8]>
-    <script src="${ctx}/static/admin/js/excanvas.min.js"></script>
-    <![endif]-->
+    <script type="text/javascript" src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/Validform/js/Validform_v5.3.2.js"></script>
 </hy:extends>
 <hy:extends name="body">
     <div class="breadcrumbs" id="breadcrumbs">
@@ -42,7 +35,6 @@
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
-                <input id="btnshow" type="button" value="Show" onclick="showdiv();"/>
                 <!-- PAGE CONTENT BEGINS -->
                 <form class="form-horizontal" action="${ctx}/admin/platform/user/save.html" id="createForm" role="form" method="post">
                     <div class="form-group">
@@ -61,9 +53,11 @@
                         <div class="col-sm-9">
                             <input type="text" id="loginName"
                                    value="${user.loginName}"
-                                   readonly="readonly"
                                    <c:if test="${user.id eq '' || user.id == null}">
-	                                   ajaxurl="${ctx}/admin/platform/user/validLoginName.json"
+                                       ajaxurl="${ctx}/admin/platform/user/validLoginName.json"
+                                   </c:if>
+                                   <c:if test="${user.id ne '' && user.id != null}">
+                                       readonly="readonly"
                                    </c:if>
                                    datatype="*6-20,loginName" nullmsg="请输入登录名称！"
                                    errormsg="登录名称范围在6~20位之间数字、下划线、字母组合"
@@ -238,4 +232,4 @@
         });
     </script>
 </hy:extends>
-<jsp:include page="/base/manager.jsp"/>
+<jsp:include page="/base/admin.jsp"/>

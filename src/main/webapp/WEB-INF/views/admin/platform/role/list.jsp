@@ -8,22 +8,6 @@
 <hy:extends name="css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/main/css/admin.css">
     <style type="text/css">
-        .bg-success {
-            padding-left: 8px;
-            font-size: 15px;
-        }
-
-        .operate {
-            text-align: center;
-        }
-
-        .search-table input {
-            width: 80%;
-            border: 1px solid #dedede;
-            -moz-border-radius: 5px; /* Gecko browsers */
-            -webkit-border-radius: 5px; /* Webkit browsers */
-            border-radius: 10px; /* W3C syntax */
-        }
     </style>
 </hy:extends>
 
@@ -66,10 +50,18 @@
                 alert('添加权限成功');
             }
         }
-
     </script>
     <link rel="stylesheet" href="${ctx}/static/ztree/css/demo.css" type="text/css">
     <link rel="stylesheet" href="${ctx}/static/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="${ctx}/static/main/css/admin.css">
+    <style type="text/css">
+        body {
+            color: #393939;
+            font-family: "Open Sans";
+            font-size: 13px;
+            line-height: 1.5;
+        }
+    </style>
 </hy:extends>
 <hy:extends name="body">
     <div class="breadcrumbs" id="breadcrumbs">
@@ -93,7 +85,7 @@
                 <!-- PAGE CONTENT BEGINS -->
                 <form id="queryForm" name="queryForm" action="${ctx}/admin/platform/role/list.html" method="post">
                     <table id="search-table" class="table table-bordered table-responsive search-table">
-                        <caption class="bg-success">搜索条件</caption>
+                        <caption class="bg-success" style="height: 40px;line-height: 40px;">搜索条件</caption>
                         <tr>
                             <td>角色名称</td>
                             <td>
@@ -110,16 +102,18 @@
                             </td>
                         </tr>
                     </table>
+                    <div class="title-bar">
+                        <div style="float: left">角色列表</div>
+                        <div style="float: right;margin-right: 10px;">
+                            <button type="button" id="create" class="btn btn-success btn-sm icon-plus">新增</button>
+                        </div>
+                    </div>
                     <table class="table table-bordered table-responsive table-hover" id="tableList">
-                        <caption class="bg-success" style="height: 55px;line-height: 36px;">
-                            角色列表
-                            <div style="float: right;margin-right: 10px;">
-                                <button type="button" id="create" class="btn btn-primary btn-sm icon-plus">新增</button>
-                            </div>
-                        </caption>
                         <tr>
-                            <td class="operate"></td>
-                            <td>序号</td>
+                            <td class="operate">
+                                <input onclick="selectAll()" type="checkbox" name="checkbox" id="chkAll">
+                            </td>
+                            <td class="operate">序号</td>
                             <td>角色编号</td>
                             <td>角色名称</td>
                             <td class="operate">操作</td>
@@ -127,17 +121,19 @@
                         <c:forEach items="${rolesList}" var="role" varStatus="u">
                             <tr>
                                 <td class="operate">
-                                    <input type="checkbox" name="chkOne">
+                                    <input type="checkbox" name="checkbox">
                                 </td>
-                                <td>${(u.index + 1)}</td>
+                                <td class="operate">
+                                        ${u.index + 1}
+                                </td>
                                 <td>${role.code}</td>
                                 <td>${role.name}</td>
-                                <td style="text-align: center;width:140px;">
-                                    <a title="修改" href="${ctx}/admin/platform/role/edit/${user.id}.html">
-                                        <i class="icon-edit icon-large"></i>
+                                <td class="operate">
+                                    <a title="修改" href="${ctx}/admin/platform/role/edit/${role.id}.html">
+                                        <i class="icon-edit-sign icon-large blue"></i>
                                     </a>
                                     <span title="删除" style="cursor: pointer" href="javascript:void(0)"
-                                          onclick="deleteInfo('${user.id}')">
+                                          onclick="deleteInfo('${role.id}')">
                                         <i class="icon-minus-sign icon-large red"></i>
                                     </span>
                                     <span title="添加权限" style="cursor: pointer"
@@ -148,13 +144,11 @@
                                 </td>
                             </tr>
                         </c:forEach>
-                        <tfoot>
                         <tr>
-                            <td colspan="4" style="text-align: right">
+                            <td colspan="5" style="text-align: right">
                                 <page:pageInfo pageInfo="${pager}" formId="queryForm" currentPage="${currentPage}"/>
                             </td>
                         </tr>
-                        </tfoot>
                     </table>
                 </form>
                 <!-- PAGE CONTENT ENDS -->
@@ -187,6 +181,18 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
         <SCRIPT type="text/javascript">
+            function selectAll() {
+                var checklist = document.getElementsByName("checkbox");
+                if (document.getElementById("chkAll").checked) {
+                    for (var i = 0; i < checklist.length; i++) {
+                        checklist[i].checked = 1;
+                    }
+                } else {
+                    for (var j = 0; j < checklist.length; j++) {
+                        checklist[j].checked = 0;
+                    }
+                }
+            }
             var setting = {
                 check: {
                     enable: true
@@ -234,4 +240,4 @@
     <!-- /.page-content -->
 
 </hy:extends>
-<jsp:include page="/base/manager.jsp"/>
+<jsp:include page="/base/admin.jsp"/>

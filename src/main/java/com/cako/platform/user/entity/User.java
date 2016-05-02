@@ -28,6 +28,7 @@ public class User extends BaseEntity {
 	private String password;// 登录密码
 	private String userTag;//用户手机端的标识
 	private List<Role> roles = new ArrayList<Role>();
+	private String resources = "1";
 	private SysEnum.Status userStatus = Status.INIT;// 用户状态
 
 	private SysEnum.UserType userType = UserType.GENERAL;// 用户类型
@@ -104,5 +105,13 @@ public class User extends BaseEntity {
 
 	public void setUserType(SysEnum.UserType userType) {
 		this.userType = userType;
+	}
+
+	public String getResources() {
+		return resources;
+	}
+
+	public void setResources(String resources) {
+		this.resources = resources;
 	}
 }

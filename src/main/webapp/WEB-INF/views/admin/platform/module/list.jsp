@@ -6,25 +6,13 @@
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
 <hy:extends name="title">博客管理系统</hy:extends>
 <hy:extends name="css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/main/css/admin.css">
 </hy:extends>
-
 <hy:extends name="javascript">
     <script type="text/javascript">
-        function selectAll() {
-            var checklist = document.getElementsByName("checkbox");
-            if (document.getElementById("chkAll").checked) {
-                for (var i = 0; i < checklist.length; i++) {
-                    checklist[i].checked = 1;
-                }
-            } else {
-                for (var j = 0; j < checklist.length; j++) {
-                    checklist[j].checked = 0;
-                }
-            }
-        }
         $(function () {
             $("#create").click(function () {
-                window.location.href = "${ctx}/admin/platform/user/create.html"
+                window.location.href = "${ctx}/admin/platform/menu/create.html"
             });
         });
         function deleteInfo(id) {
@@ -35,12 +23,24 @@
                     data = JSON.parse(data);
                     if (data.resposecode == '<%=MessageObject.ResponseCode.code_200%>') {
                         alert(data.message);
-                        window.location.href = "${ctx}/admin/platform/user/list.html";
+                        window.location.href = "${ctx}/admin/platform/menu/list.html";
                     } else {
                         alert(data.message);
                         return false;
                     }
                 });
+            }
+        }
+        function selectAll() {
+            var checklist = document.getElementsByName("checkbox");
+            if (document.getElementById("chkAll").checked) {
+                for (var i = 0; i < checklist.length; i++) {
+                    checklist[i].checked = 1;
+                }
+            } else {
+                for (var j = 0; j < checklist.length; j++) {
+                    checklist[j].checked = 0;
+                }
             }
         }
     </script>
@@ -58,37 +58,37 @@
                 <i class="icon-home home-icon"></i>
                 <a href="#">首页</a>
             </li>
-            <li class="active">用户管理</li>
+            <li class="active">菜单管理</li>
         </ul><!-- .breadcrumb -->
     </div>
     <div class="page-content">
         <div class="row">
             <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
-                <form id="queryForm" name="queryForm" action="${ctx}/admin/platform/user/list.html" method="post">
+                <form id="queryForm" name="queryForm" action="${ctx}/admin/platform/menu/list.html" method="post">
                     <table id="search-table" class="table table-bordered table-responsive search-table">
                         <caption class="bg-success">搜索条件</caption>
                         <tr>
-                            <td>用户昵称</td>
+                            <td>菜单名称</td>
                             <td>
-                                <input name="nickName" id="nickName" type="text">
+                                <input name="name_li" id="name" type="text">
                             </td>
-                            <td>用户名</td>
+                            <td>菜单路径</td>
                             <td>
-                                <input name="loginName" id="loginName" type="text">
+                                <input name="href_eq" id="href" type="text">
                             </td>
                         </tr>
                         <tr>
                             <td colspan="4" style="text-align: right">
-                                <button type="button" class="btn btn-info btn-sm icon-search">搜索</button>
+                                <button type="submit" class="btn btn-info btn-sm icon-search">搜索</button>
                             </td>
                         </tr>
                     </table>
                     <div class="title-bar">
-                        <div style="float: left">用户列表</div>
+                        <div style="float: left">菜单列表</div>
                         <div style="float: right;margin-right: 10px;">
-                            <button type="button" id="create" class="btn btn-primary btn-sm icon-plus">新增</button>
-                            <button type="button" id="addRole" class="btn btn-primary btn-sm icon-plus">赋权限</button>
+                            <button type="button" id="create" class="btn btn-success btn-sm icon-plus">新增</button>
+                            <button type="button" id="addRole" class="btn btn-success btn-sm icon-plus">赋权限</button>
                         </div>
                     </div>
                     <table class="table table-bordered table-responsive table-hover" id="tableList">
@@ -97,49 +97,34 @@
                                 <input onclick="selectAll()" type="checkbox" name="checkbox" id="chkAll">
                             </td>
                             <td class="operate">序号</td>
-                            <td>用户昵称</td>
-                            <td>登录名称</td>
-                            <td>电子邮箱</td>
-                            <td>出生日期</td>
-                            <td>用户类型</td>
-                            <td>用户状态</td>
-                            <td>用户来源</td>
+                            <td style="">菜单名称</td>
+                            <td>菜单地址</td>
+                            <td>菜单别名</td>
+                            <td>上级菜单</td>
+                            <td>是否显示</td>
                             <td class="operate">操作</td>
                         </tr>
-                        <c:forEach items="${list}" var="user" varStatus="u">
+                        <c:forEach items="${menuTrees}" var="menu" varStatus="u">
                             <tr>
                                 <td class="operate">
                                     <input type="checkbox" name="checkbox">
                                 </td>
                                 <td class="operate">
-                                        ${u.index + 1}
+                                    ${u.index + 1}
                                 </td>
-                                <td>${user.nickName}</td>
-                                <td>${user.loginName}</td>
-                                <td>${user.email}</td>
-                                <td>${user.brithday}</td>
+                                <td>${menu.name}</td>
+                                <td>${menu.href}</td>
+                                <td>${menu.authority}</td>
+                                <td>${menu.menu.name}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${user.userType=='ADMIN'}">管理员</c:when>
-                                        <c:when test="${user.userType=='GENERAL'}">普通用户</c:when>
-                                        <c:when test="${user.userType=='LEAGUER_MEMBER'}">超级会员</c:when>
-                                        <c:when test="${user.userType=='MEMBER'}">普通会员</c:when>
+                                        <c:when test="${menu.displayStatus == 'DISPLAY'}">显示</c:when>
+                                        <c:when test="${menu.displayStatus == 'NONE'}">不显示</c:when>
                                     </c:choose>
-                                </td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${user.userStatus == 'INIT'}">初始状态</c:when>
-                                        <c:when test="${user.userStatus == 'LOCKED'}">账户锁定</c:when>
-                                        <c:when test="${user.userStatus == 'NORMAL'}">账户可用</c:when>
-                                    </c:choose>
-                                </td>
-                                <td>
-                                    <c:if test="${user.resources == '1'}">管理端</c:if>
-                                    <c:if test="${user.resources == '2'}">客户端</c:if>
                                 </td>
                                 <td style="text-align: center;width:140px;">
                                     <a title="修改" href="${ctx}/admin/platform/user/edit/${user.id}.html">
-                                        <i class="icon-edit-sign icon-large blue"></i>
+                                        <i class="icon-edit icon-large"></i>
                                     </a>
                                     <a title="删除" href="javascript:void(0)" onclick="deleteInfo('${user.id}')">
                                         <i class="icon-minus-sign icon-large red"></i>
@@ -150,11 +135,13 @@
                                 </td>
                             </tr>
                         </c:forEach>
+                        <tfoot>
                         <tr>
-                            <td colspan="10" style="text-align: right">
+                            <td colspan="9" style="text-align: right">
                                 <page:pageInfo pageInfo="${pager}" formId="queryForm" currentPage="${currentPage}"/>
                             </td>
                         </tr>
+                        </tfoot>
                     </table>
                 </form>
                 <!-- PAGE CONTENT ENDS -->

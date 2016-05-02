@@ -1,4 +1,63 @@
+body {
+    background-color: #ffffff;
+}
+.search-table input {
+    width: 80%;
+    border: 1px solid #dedede;
+    -moz-border-radius: 5px; /* Gecko browsers */
+    -webkit-border-radius: 5px; /* Webkit browsers */
+    border-radius: 10px; /* W3C syntax */
+}
+
 .container-fluid {
+    padding-left: 0;
     padding-right: 0px;
-    padding-left: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.operate {
+    text-align: center;
+}
+.chosen-container-single .chosen-single span {
+    margin-top: 3px;
+}
+
+a:link {
+    text-decoration: none;
+    background: none;
+    color: blueviolet;
+}
+
+.page-content {
+    padding: 0px;
+}
+
+.bg-success {
+    padding-left: 8px;
+    font-size: 15px;
+    text-align: left;
+    background: #6fb3e0;
+    color: white;
+}
+
+.title-bar {
+    background: #6fb3e0;
+    height: 45px;
+    padding: 5px 0 5px 10px;
+}
+
+.title-bar>div:first-child {
+    height: 30px;
+    line-height: 35px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.chosen-single div b:before {
+    top: 1px;
+}
+
+.form-horizontal {
+    margin-top: 10px;
 }

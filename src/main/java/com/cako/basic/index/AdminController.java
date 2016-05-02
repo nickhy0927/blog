@@ -10,7 +10,12 @@ public class AdminController {
 	
 	@RequestMapping(value = "/adminIndex.html")
 	public ModelAndView adminIndex() {
-		ModelAndView view = new ModelAndView("/admin/index");
+		ModelAndView view = new ModelAndView("admin/index");
+		return view;
+	}
+	@RequestMapping(value = "/home.html")
+	public ModelAndView home() {
+		ModelAndView view = new ModelAndView("admin/home");
 		return view;
 	}
 }
