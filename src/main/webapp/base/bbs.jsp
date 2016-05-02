@@ -10,8 +10,13 @@
     <title>
         <hy:block name="title"></hy:block>
     </title>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/Validform/css/style.css">
+    <link rel="stylesheet" href="${ctx}/static/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="${ctx}/static/font-awesome/css/font-awesome-ie7.css.css"/>
+    <link rel="stylesheet" href="${ctx}/static/bbs/css/index.css"/>
+    <link rel="stylesheet" href="${ctx}/static/bbs/css/style.css"/>
+    <link rel="stylesheet" href="${ctx}/static/bootstrap/css/bootstrap.css"/>
     <link rel="shortcut icon" href="${ctx}/static/bbs/images/favicon.png" />
-
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="js/html5.js"></script>
@@ -33,16 +38,20 @@
         }
         #show {
             background-color: white;
-            border: 0 solid #e8e9f7;
+            border: 0 solid #f2f2f2;
             display: none;
-            height: 12%;
+            height: 28%;
             left: 35%;
             overflow: auto;
             padding: 15px;
             position: absolute;
-            top: 50%;
+
+            top: 42%;
             width: 20%;
             z-index: 1002;
+           /* filter:alpha(opacity=90); !*IE滤镜，透明度50%*!
+            -moz-opacity:0.9; !*Firefox私有，透明度50%*!
+            opacity:0.9;!*其他，透明度50%*!*/
         }
         a:link {
             text-decoration-line: none;
@@ -77,10 +86,7 @@
     <div class="container-fluid">
         <hy:block name="body"></hy:block>
         <div id="bg"></div>
-        <div id="show">测试
-            <input id="btnclose" type="button" value="Close" onclick="hidediv();"/>
-        </div>
-
+        <div id="show"></div>
     </div>
 </body>
 </html>
