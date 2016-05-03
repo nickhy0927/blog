@@ -33,6 +33,7 @@ public abstract class DefaultAbstractService<E, ID extends Serializable> impleme
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void delete(Iterable<E> entities) throws ServiceException {
 		this.dao.delete(entities);
 	}
@@ -43,6 +44,7 @@ public abstract class DefaultAbstractService<E, ID extends Serializable> impleme
 		this.dao.deleteAll();
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	@SuppressWarnings("unchecked")
 	public void deleteBatch(String[] ids) throws ServiceException {
@@ -54,26 +56,31 @@ public abstract class DefaultAbstractService<E, ID extends Serializable> impleme
 		}
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<E> findAll() throws ServiceException {
 		return dao.findAll();
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public E get(ID id) throws ServiceException {
 		return this.dao.findOne(id);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<E> queryByMap(Map<String, Object> map) throws ServiceException {
 		return this.dao.queryByMap(map);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<E> queryByMap(Map<String, Object> paramMap, Sort sort) throws ServiceException {
 		return dao.queryByMap(paramMap, sort);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public Page<E> queryPageByMap(Map<String, Object> map, Pageable pageable) throws ServiceException {
 		return this.dao.queryPageByMap(map, pageable);
