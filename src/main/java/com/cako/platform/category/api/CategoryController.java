@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -23,6 +24,13 @@ public class CategoryController implements Controller{
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	public String create(Model model) {
+		Category category = new Category();
+		category.setCode(SysContants.CodeValue.getCodeValue("c"));
+		model.addAttribute("category", category);
+		return "admin/platform/category/create";
+	}
 	
 	/**
 	 * 保存
