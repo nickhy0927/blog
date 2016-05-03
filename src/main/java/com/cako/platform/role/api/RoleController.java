@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.orm.commons.utils.JsonMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -23,7 +22,7 @@ import com.cako.platform.role.entity.Role;
 import com.cako.platform.role.service.RoleService;
 import com.cako.platform.utils.BaseController;
 import com.orm.commons.exception.ServiceException;
-import com.orm.commons.utils.MessageObject;
+import com.orm.commons.utils.JsonMapper;
 import com.orm.commons.utils.ObjectTools;
 import com.orm.commons.utils.Pager;
 import com.orm.enums.SysEnum.DeleteStatus;
