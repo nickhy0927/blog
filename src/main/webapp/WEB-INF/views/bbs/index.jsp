@@ -175,17 +175,13 @@
     <div class="modal-dialog" style="width:800px;">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close"
-                        data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
                 <h4 class="modal-title" id="myModalLabel">
                     <!-- PAGE CONTENT BEGINS -->
                     用户注册
                 </h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="${ctx}/admin/platform/user/save.html" id="createForm" role="form"
+                <form class="form-horizontal" action="${ctx}/blog/register" id="createForm" role="form"
                       method="post">
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nickName">用户昵称</label>
@@ -330,7 +326,7 @@
             hidediv();
             if (data.status == 'y') {
                 alert(data.info);
-                window.location.href = "${ctx}/admin/platform/user/list.html";
+                window.onload();
             } else {
                 alert(data.info);
                 return false;
