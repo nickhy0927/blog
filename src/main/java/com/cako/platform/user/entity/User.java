@@ -28,11 +28,22 @@ public class User extends BaseEntity {
 	private String password;// 登录密码
 	private String userTag;//用户手机端的标识
 	private List<Role> roles = new ArrayList<Role>();
+	private List<User> friends = new ArrayList<User>();
 	private String resources = "1";
 	private SysEnum.Status userStatus = Status.INIT;// 用户状态
 
 	private SysEnum.UserType userType = UserType.GENERAL;// 用户类型
 
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "t_p_user_friend", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "f_id"))
+	public List<User> getFriends() {
+		return friends;
+	}
+	
+	public void setFriends(List<User> friends) {
+		this.friends = friends;
+	}
+	
 	public String getUserTag() {
 		return userTag;
 	}
