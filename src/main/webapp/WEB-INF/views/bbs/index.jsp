@@ -92,7 +92,7 @@
         <li><a href="xc.html" onclick="return isClick(this);">相册展示</a></li>
         <li><a href="learn.html" onclick="return isClick(this);">学无止境</a></li>
         <li><a href="guestbook.html" onclick="return isClick(this);">留言板</a></li>
-        <li><a href="about.html">关于我</a></li>
+        <li><a href="${ctx}/outLink/about.html">关于我</a></li>
         <div class="clear"></div>
     </ul>
 </div>
