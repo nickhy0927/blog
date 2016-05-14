@@ -1,7 +1,7 @@
 package com.cako.platform.user.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.cako.platform.role.entity.Role;
 import com.cako.platform.utils.BaseEntity;
@@ -27,20 +30,21 @@ public class User extends BaseEntity {
 	private String nickName;// 用户昵称
 	private String password;// 登录密码
 	private String userTag;//用户手机端的标识
-	private List<Role> roles = new ArrayList<Role>();
-	private List<User> friends = new ArrayList<User>();
+	private Set<Role> roles = new HashSet<Role>();
+	private Set<User> friends = new HashSet<User>();
 	private String resources = "1";
 	private SysEnum.Status userStatus = Status.INIT;// 用户状态
 
 	private SysEnum.UserType userType = UserType.GENERAL;// 用户类型
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "t_p_user_friend", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "f_id"))
-	public List<User> getFriends() {
+	@Fetch(FetchMode.SUBSELECT)
+	public Set<User> getFriends() {
 		return friends;
 	}
 	
-	public void setFriends(List<User> friends) {
+	public void setFriends(Set<User> friends) {
 		this.friends = friends;
 	}
 	
@@ -72,9 +76,10 @@ public class User extends BaseEntity {
 		return password;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "t_platform_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
@@ -106,7 +111,7 @@ public class User extends BaseEntity {
 		this.password = password;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 

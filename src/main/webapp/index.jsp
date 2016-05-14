@@ -10,7 +10,7 @@
 <body>
  <script type="text/javascript">
  	$(document).ready(function(){
- 		window.location.href = "${ctx}/outLink/outerPage?SESSIONID="+(Math.random() * 100000000);
+ 		window.location.href = "${ctx}/outLink/outerPage.html?SESSIONID="+(Math.random() * 100000000);
  	});
  </script>
 </body>

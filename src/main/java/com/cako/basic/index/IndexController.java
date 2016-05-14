@@ -2,6 +2,8 @@ package com.cako.basic.index;
 
 import com.cako.basic.topic.column.entity.Column;
 import com.cako.basic.topic.column.service.ColumnService;
+import com.cako.platform.user.entity.User;
+import com.cako.platform.user.service.UserService;
 import com.orm.commons.exception.ServiceException;
 import com.orm.commons.utils.JsonMapper;
 import com.orm.commons.utils.MessageObject;
@@ -27,12 +29,35 @@ import java.io.PrintWriter;
 import java.util.*;
 
 @Controller
+@RequestMapping(value = "/outLink")
 public class IndexController {
     private static Logger logger = LoggerFactory.getLogger(IndexController.class);
+    
     @Autowired
     private ColumnService columnService;
-
-    @RequestMapping(value = "/outLink/outerPage", method = RequestMethod.GET)
+    
+    @Autowired
+	private UserService userService;
+    
+    @RequestMapping(value = "/login.html")
+	public void login(HttpServletResponse response,HttpServletRequest request){
+		String loginName = request.getParameter("loginName");
+		String password = request.getParameter("password");
+		User user = userService.findUserByLoginNameAndPassword(loginName, password);
+		if (user != null) {
+			request.getSession().setAttribute("user", user);
+		}
+		MessageObject message = new MessageObject();
+		message.setInforMessage("登录成功");
+		response.setHeader("ContentType", "text/html;charset=UTF-8");
+		try {
+			response.getWriter().write(message.getJsonMapper(message));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+    
+    @RequestMapping(value = "/outerPage.html", method = RequestMethod.GET)
     public String outerPage(Model model) {
         Map<String, Object> paramsMap = new HashMap<String, Object>();
         try {
@@ -148,9 +173,9 @@ public class IndexController {
         MessageObject message = new MessageObject();
         while (iterator.hasNext()) {
             MultipartFile multipartFile = request.getFile((String) iterator.next());
-            String type = multipartFile.getContentType();
+            // String type = multipartFile.getContentType();
             String name = multipartFile.getOriginalFilename();
-            float size = (float) (multipartFile.getSize() / (1024));
+            //float size = (float) (multipartFile.getSize() / (1024));
             System.out.println("文件名称 ： " + name);
             message.setInforMessage("上传成功");
         }

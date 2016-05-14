@@ -1,14 +1,32 @@
+<%@page import="com.cako.platform.user.entity.User"%>
+<%@page import="com.orm.commons.utils.MessageObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set value="${pageContext.request.contextPath}" var="ctx"></c:set>
+<%
+	Object object = session.getAttribute("user");
+	String id = "1";
+	if(object != null) {
+		User u = (User)object;
+		id = u.getId();
+	}
+%>
 <html>
 <%@ taglib prefix="hy" uri="https://www.hy.include" %>
 <hy:extends name="title">滴落的露珠</hy:extends>
+<c:set value="<%=id %>" var="uId"></c:set>
 <hy:extends name="css">
 <style type="text/css">
     .Validform_checktip {
         line-height: 22px;
     }
+    .lanmubox .bd ul li a {
+	    font-size: 11px;
+	}
+	
+	a:HOVER {
+		text-decoration: none;
+	}
 </style>
 </hy:extends>
 <hy:extends name="javascript">
@@ -20,13 +38,42 @@
         $("#login").on('click', function () {
             $("#show").html('<div style="width: 100%;padding:5px 0 20px 65px;">'
                     + '<img src="${ctx}/static/bbs/images/loading.gif">'
-                    + '</div><div>正在登录请稍等...</div>').css({
+                    + '</div><div style="text-align:center">正在登录请稍等...</div>').css({
                 'text-align': 'center'
             });
             showdiv();
-            $.ajax({})
+            var ajaxCallUrl = "${ctx}/outLink/login.html";
+            $.ajax({
+            	type: "POST",
+                url:ajaxCallUrl,
+                data:$('#loginForm').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                	hidediv();
+                	$("#msg-tip").html('用户名或者密码错误');
+              		return false;
+                },
+                success: function(data) {
+                	hidediv();
+                  	data = JSON.parse(data);
+                  	if (data.resposecode == '<%=MessageObject.ResponseCode.code_200%>'){
+                  		window.location.href = "";
+                  	} else {
+                  		$("#msg-tip").html('用户名或者密码错误');
+                  		return false;
+                  	}
+                }
+            });
         });
     });
+	function isClick() {
+		var cUId = "${uId}";
+		if(cUId == 1){
+			alert('请先登陆');
+			return false;
+		}
+		return true;
+	}	
 </script>
 </hy:extends>
 <hy:extends name="body">
@@ -39,13 +86,13 @@
 <!--nav-->
 <div id="nav">
     <ul>
-        <li><a href="index.html">首页</a></li>
-        <li><a href="about.html">关于我</a></li>
+        <li><a href="${ctx}/outLink/outerPage.html">首页</a></li>
         <li><a href="shuo.html">碎言碎语</a></li>
-        <li><a href="riji.html">个人日记</a></li>
-        <li><a href="xc.html">相册展示</a></li>
-        <li><a href="learn.html">学无止境</a></li>
-        <li><a href="guestbook.html">留言板</a></li>
+        <li><a href="riji.html" onclick="return isClick(this);">个人日记</a></li>
+        <li><a href="xc.html" onclick="return isClick(this);">相册展示</a></li>
+        <li><a href="learn.html" onclick="return isClick(this);">学无止境</a></li>
+        <li><a href="guestbook.html" onclick="return isClick(this);">留言板</a></li>
+        <li><a href="about.html">关于我</a></li>
         <div class="clear"></div>
     </ul>
 </div>
@@ -89,6 +136,9 @@
     <!--right-->
     <div class="right" id="c_right">
         <div class="s_about">
+        	<%
+        		if (object == null){
+        	%>
             <div class="login">
                 <div class="login-title">用户登录</div>
                 <div class="login-content">
@@ -105,7 +155,7 @@
                             </div>
                             <input type="password" class="form-control" name="password" placeholder="登录密码">
                         </div>
-                        <div id="msg-tip">${msg}</div>
+                        <div id="msg-tip"></div>
                         <div class="input-group" style="margin-top: 10px;width: 100%">
                             <a id="login" href="#" class="btn btn-success btn-sm">登录</a>
                             <span style="width: 60px;">&nbsp;&nbsp;&nbsp;</span>
@@ -119,6 +169,28 @@
                     </form>
                 </div>
             </div>
+            <%
+            	} else {
+            		User user = (User)object;
+       		%>	
+       			<%-- 登录成功：<%=user.getNickName()%> --%>
+       			<h2>关于博主</h2>
+           		<img src="${ctx}/static/bbs/images/my.jpg" width="230" height="230" alt="博主"/>
+           		<p>博主：<%=user.getNickName()%></p>
+           		<p>职业：web前端、视觉设计</p>
+           		<p>简介：</p>
+           		<p>
+           			<a href="#" title="联系博主">
+           				<span class="left b_1"></span>
+           			</a>
+           			<a href="#" title="加入QQ群，一起学习！">
+           				<span class="left b_2"></span>
+           			</a>
+           			<div class="clear"></div>
+          		</p>	
+     		<%
+     			}
+     		%>
         </div>
         <!--栏目分类-->
         <div class="lanmubox">

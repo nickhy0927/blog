@@ -3,14 +3,13 @@ package com.cako.platform.user.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.orm.commons.utils.JsonMapper;
-import com.orm.commons.utils.MessageObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -32,6 +31,8 @@ import com.cako.platform.utils.BaseController;
 import com.cako.platform.utils.BeanToMapUtil;
 import com.orm.commons.encryption.MD5Encryption;
 import com.orm.commons.exception.ServiceException;
+import com.orm.commons.utils.JsonMapper;
+import com.orm.commons.utils.MessageObject;
 import com.orm.commons.utils.ObjectTools;
 import com.orm.commons.utils.Pager;
 import com.orm.enums.SysEnum;
@@ -144,7 +145,7 @@ public class UserController extends BaseController {
 	public void addRole(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String roleIds = request.getParameter("roleIds");
-			List<Role> roles = new ArrayList<Role>();
+			Set<Role> roles = new HashSet<Role>();
 			if (StringUtils.isNotEmpty(roleIds)) {
 				String[] ids = roleIds.split(",");
 				for (int i = 0; i < ids.length; i++) {
