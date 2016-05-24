@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * Created by Curtain on 2015/9/15.
  */
 @Entity
-@Table(name = "t_platform_menu")
+@Table(name = "t_p_menu")
 public class Menu extends BaseEntity {
 
 	private String href;

@@ -21,7 +21,7 @@ import com.orm.enums.SysEnum.Status;
 import com.orm.enums.SysEnum.UserType;
 
 @Entity
-@Table(name = "t_platform_user")
+@Table(name = "t_p_user")
 public class User extends BaseEntity {
 
 	private String brithday;// 出生日期

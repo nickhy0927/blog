@@ -18,7 +18,7 @@ import com.cako.platform.utils.BaseEntity;
  * Created by Curtain on 2015/9/21.
  */
 @Entity
-@Table(name = "t_platform_role")
+@Table(name = "t_p_role")
 public class Role extends BaseEntity {
 	private String code;
 	private String name;

@@ -12,7 +12,7 @@ import com.cako.platform.utils.BaseEntity;
  *
  */
 @Entity
-@Table(name = "t_platform_attachment")
+@Table(name = "t_p_attachment")
 public class Attachment extends BaseEntity {
 
 	/**
