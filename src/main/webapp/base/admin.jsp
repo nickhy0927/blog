@@ -126,7 +126,7 @@
     <!-- ace scripts -->
     <script src="${ctx}/static/admin/js/ace-elements.min.js"></script>
     <script src="${ctx}/static/admin/js/ace.min.js"></script>
-    <%--<script src="${ctx}/static/bootstrap/js/bootstrap.js"></script>--%>
+    <script src="${ctx}/static/bootstrap/js/bootstrap.js"></script>
     <!-- 填充javascript的代码 -->
     <hy:block name="javascript"></hy:block>
 

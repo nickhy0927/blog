@@ -10,7 +10,18 @@
 
 <hy:extends name="javascript">
     <script type="text/javascript">
-
+		$(function(){
+			$(".nav-list").find('li').each(function(){
+				var that = $(this);
+				that.find('a').each(function(){
+					$(this).on('click',function(){
+						console.log($(this));
+						$(".sidebar li").removeClass('active');
+						$(this).addClass('active');
+					});
+				});
+			});
+		});
     </script>
 </hy:extends>
 <hy:extends name="body">
@@ -244,7 +255,7 @@
 
             <div class="main-content">
                 <div class="page-content" style="padding: 0px;">
-                    <iframe id="main_frame" onLoad="reinitIframeEND();" name="main_frame" frameBorder=0 scrolling=no src="${ctx}/admin/home.html"></iframe>
+                    <iframe id="main_frame" style="width: 100%" onLoad="reinitIframeEND();" name="main_frame" frameBorder=0 scrolling=no src="${ctx}/admin/home.html"></iframe>
                 </div><!-- /.page-content -->
             </div><!-- /.main-content -->
 

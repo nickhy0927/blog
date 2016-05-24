@@ -7,7 +7,7 @@ import com.cako.platform.utils.SysContants;
 import com.orm.commons.utils.IdEntity;
 
 /**
- * 栏目
+ * 栏目分类
  * 
  * @author HuangYuan
  *

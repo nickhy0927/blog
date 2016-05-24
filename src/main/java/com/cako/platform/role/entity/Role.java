@@ -26,7 +26,7 @@ public class Role extends BaseEntity {
 	private List<Menu> menus = new ArrayList<Menu>();
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "t_platform_role_menu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
+	@JoinTable(name = "t_p_role_menu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
 	public List<Menu> getMenus() {
 		return menus;
 	}

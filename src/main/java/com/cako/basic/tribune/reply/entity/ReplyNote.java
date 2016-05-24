@@ -15,7 +15,7 @@ import com.cako.platform.utils.BaseEntity;
  * @TIME:2015年9月11日 下午11:59:49
  */
 @Entity
-@Table(name = "tribune_user_reply")
+@Table(name = "t_user_reply")
 public class ReplyNote extends BaseEntity {
 
 	private String message;

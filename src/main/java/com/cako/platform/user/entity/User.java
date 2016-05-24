@@ -21,7 +21,7 @@ import com.orm.enums.SysEnum.Status;
 import com.orm.enums.SysEnum.UserType;
 
 @Entity
-@Table(name = "t_p_user")
+@Table(name = "t_p_users")
 public class User extends BaseEntity {
 
 	private String brithday;// 出生日期
@@ -38,8 +38,8 @@ public class User extends BaseEntity {
 	private SysEnum.UserType userType = UserType.GENERAL;// 用户类型
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "t_p_user_friend", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "f_id"))
 	@Fetch(FetchMode.SUBSELECT)
+	@JoinTable(name = "t_p_user_fri", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "fr_id"))
 	public Set<User> getFriends() {
 		return friends;
 	}
@@ -78,7 +78,7 @@ public class User extends BaseEntity {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@Fetch(FetchMode.SUBSELECT)
-	@JoinTable(name = "t_platform_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "t_p_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	public Set<Role> getRoles() {
 		return roles;
 	}

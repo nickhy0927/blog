@@ -16,7 +16,7 @@ import com.cako.platform.utils.BaseEntity;
  * @TIME:2015年9月12日 上午12:00:07
  */
 @Entity
-@Table(name = "tribune_user_note")
+@Table(name = "t_user_note")
 public class UserNote extends BaseEntity {
 	private Column column;// 帖子所属的模块
 	private String noteContent;// 帖子的内容
