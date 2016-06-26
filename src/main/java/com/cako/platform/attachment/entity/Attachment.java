@@ -33,7 +33,16 @@ public class Attachment extends BaseEntity {
 	 * 附件的大小
 	 */
 	private String fileSize;
-
+	private String filename;
+	
+	public String getFilename() {
+		return filename;
+	}
+	
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	
 	/**
 	 * 文件后缀名
 	 */

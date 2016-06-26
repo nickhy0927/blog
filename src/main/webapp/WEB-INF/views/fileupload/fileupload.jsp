@@ -8,7 +8,7 @@
     <script type="text/javascript" src="${ctx}/static/jquery/fileupload.js"></script>
     <link rel="stylesheet" href="${ctx}/static/jquery/fileupload.css" type="text/css">
     <script type="text/javascript">
-        $(document).ready(function () {
+        /* $(document).ready(function () {
             $("#selectfile").fileupload({
                 fileId: 'attachment',
                 url: '${ctx}/outLink/upload',
@@ -19,12 +19,17 @@
                     console.log(data)
                 }
             });
-        });
+        }); */
     </script>
 </head>
 <body>
 <input value="选择文件" type="button" id="selectfile" name="selectfile"/>
 <input value="上传文件" type="button" id="startfile" name="startfile"/>
-<input type="file" name="attachment" style="display: none" id="attachment">
+<!-- <input type="file" name="attachment" style="display: none" id="attachment"> -->
+<form action="${ctx}/outLink/upload" enctype="multipart/form-data" method="post">
+	<input name="attachment" id="attachment" multiple="multiple" type="file"/>
+	<button type="submit">上传</button>
+</form>
+
 </body>
 </html>

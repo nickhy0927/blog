@@ -2,6 +2,7 @@ package cn.jpush.api.common;
 
 import java.util.HashMap;
 
+@SuppressWarnings("serial")
 public class ClientConfig extends HashMap<String, Object> {
 
     public static final String DEVICE_HOST_NAME = "device.host.name";
