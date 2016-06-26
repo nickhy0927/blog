@@ -10,12 +10,9 @@ import cn.jpush.api.common.resp.ResponseWrapper;
 import cn.jpush.api.schedule.model.SchedulePayload;
 import cn.jpush.api.utils.Preconditions;
 import cn.jpush.api.utils.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ScheduleClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ScheduleClient.class);
     private final NativeHttpClient _httpClient;
 
     private String hostName;
