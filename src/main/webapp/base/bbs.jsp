@@ -75,14 +75,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <![endif]-->
     <!--[if !IE]> -->
-
-
-
     <!-- 填充javascript的代码 -->
     <hy:block name="javascript"></hy:block>
 
 </head>
-<body style="">
+<body>
     <div class="container-fluid">
         <hy:block name="body"></hy:block>
         <div id="bg"></div>

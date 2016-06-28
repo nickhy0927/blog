@@ -192,16 +192,15 @@
                         <a href="#" class="dropdown-toggle">
                             <i class="icon-file-alt"></i>
                             <span class="menu-text">
-                                其他页面
-                                <span class="badge badge-primary ">5</span>
+                                                                             内容发布                                      
                             </span>
                             <b class="arrow icon-angle-down"></b>
                         </a>
                         <ul class="submenu">
                             <li>
-                                <a href="faq.html">
+                                <a href="${ctx}/admin/platform/category/categoryList.html" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
-                                    帮助
+                                                                                       分类管理
                                 </a>
                             </li>
                         </ul>
