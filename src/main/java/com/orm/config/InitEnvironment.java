@@ -1,16 +1,10 @@
 package com.orm.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.orm.commons.spring.SpringContextHolder;
 
 public class InitEnvironment {
 	private static InitEnvironment environment = null;
-	private final static Logger log = LoggerFactory.getLogger(InitEnvironment.class);
-
 	private static InitEnvironment getInitEnvironment() {
-
 		return environment;
 	}
 
@@ -57,7 +51,6 @@ public class InitEnvironment {
 	}
 
 	public void init() {
-		log.info("环境正在初始化");
 		if (environment == null) {
 			environment = SpringContextHolder.getBean(InitEnvironment.class);
 		}

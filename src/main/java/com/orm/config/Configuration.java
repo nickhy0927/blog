@@ -45,8 +45,4 @@ public class Configuration {
 		}
 		return buffer.toString();
 	}
-
-	public static void main(String[] args) {
-		System.out.println(getModuleNumber("NOTE", true, 0));
-	}
 }

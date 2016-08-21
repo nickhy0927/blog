@@ -14,11 +14,9 @@ public class PageConfig {
 	private static PageConfig config = null;
 
 	public void init() {
-		logger.info("正在初始化页面配置");
 		if (config == null) {
 			config = (PageConfig) SpringContextHolder.getBean("pageConfig");
 		}
-		logger.info("初始化页面配置成功");
 		System.err.println(config);
 	}
 
