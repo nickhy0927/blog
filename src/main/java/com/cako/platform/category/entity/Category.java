@@ -1,6 +1,8 @@
 package com.cako.platform.category.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.cako.platform.utils.SysContants;
@@ -50,6 +52,8 @@ public class Category extends IdEntity {
 		this.code = code;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "category_id")
 	public Category getCategory() {
 		return category;
 	}

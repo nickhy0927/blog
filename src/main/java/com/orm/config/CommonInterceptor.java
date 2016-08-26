@@ -1,5 +1,7 @@
 package com.orm.config;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,14 +14,15 @@ import com.orm.login.SingleLogin;
 
 public class CommonInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
-    private PageConfig pageConfig;
+	@Autowired
+	private PageConfig pageConfig;
+
 	/**
 	 * 在业务处理器处理请求执行完成后,生成视图之前执行的动作 可在modelAndView中加入数据，比如当前时间
 	 */
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-			throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
 		if (modelAndView != null) { // 加入当前时间
 			modelAndView.addObject("SESSIONID", request.getSession().getId().toUpperCase());
 		}
@@ -31,18 +34,25 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	 * 从最后一个拦截器往回执行所有的postHandle() 接着再从最后一个拦截器往回执行所有的afterCompletion()
 	 */
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
-        User user = SingleLogin.getUser(request.getSession());
-        if (url.contains(pageConfig.getPathIgnore())) {
-            return true;
-        }
-        if (user == null || !SingleLogin.isOnline(request.getSession())) {
-            request.getRequestDispatcher("/WEB-INF/views/login/login.jsp").forward(request, response);
-            return false;
-        } else
-            return true;
+		List<String> urls = pageConfig.getUrls();
+		if (urls.contains(url)) {
+			return true;
+		}
+		User user = SingleLogin.getUser(request.getSession());
+		if (url.contains(pageConfig.getPathIgnore())) {
+			return true;
+		}
+		if (user == null) {
+			request.getRequestDispatcher("/WEB-INF/views/login/login.jsp").forward(request, response);
+			return false;
+		} else {
+			SingleLogin.isAlreadyEnter(request.getSession(), user.getLoginName());
+			return true;
+		}
 	}
 }

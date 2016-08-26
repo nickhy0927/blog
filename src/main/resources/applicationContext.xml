@@ -79,6 +79,11 @@
         <property name="initPassword" value="123456"/>
         <property name="initUserName" value="root"/>
         <property name="pathIgnore" value="/static"/>
+        <property name="urls">
+        	<list>
+        		<value>/admin/adminLogin.html</value>
+        	</list>
+        </property>
     </bean>
 
     <!-- development 环境 -->

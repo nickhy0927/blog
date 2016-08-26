@@ -1,10 +1,14 @@
 package com.cako.content_deply.tribune.note.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import com.cako.platform.category.entity.Category;
 import com.cako.platform.user.entity.User;
-import com.cako.platform.utils.BaseEntity;
-
-import javax.persistence.*;
+import com.orm.commons.utils.IdEntity;
 
 /**
  * @描述：发行帖子
@@ -13,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "t_user_note")
-public class UserNote extends BaseEntity {
+public class UserNote extends IdEntity {
 	private Category category;// 帖子所属的模块
 	private String noteContent;// 帖子的内容
 	private String noteNumber;// 帖子编号

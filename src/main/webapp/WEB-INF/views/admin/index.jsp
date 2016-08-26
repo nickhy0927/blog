@@ -19,7 +19,6 @@
                 var that = $(this);
                 that.find('a').each(function () {
                     $(this).on('click', function () {
-                        console.log($(this));
                         $(".sidebar li").removeClass('active');
                         $(this).addClass('active');
                     });
@@ -204,7 +203,7 @@
                             <li>
                                 <a href="${ctx}/admin/platform/category/categoryList.html" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
-                                    分类管理
+                                                                                    分类管理
                                 </a>
                             </li>
                         </ul>
@@ -213,7 +212,7 @@
                         <a href="#" class="dropdown-toggle">
                             <i class="icon-file-alt"></i>
                             <span class="menu-text">
-                                系统管理
+                                                                         系统管理
                             </span>
                             <b class="arrow icon-angle-down"></b>
                         </a>
@@ -221,7 +220,7 @@
                             <li>
                                 <a href="faq.html">
                                     <i class="icon-double-angle-right"></i>
-                                    帮助
+                                                                                    帮助
                                 </a>
                             </li>
                         </ul>
@@ -230,15 +229,15 @@
                         <a href="#" class="dropdown-toggle">
                             <i class="icon-file-alt"></i>
                             <span class="menu-text">
-                                帖子管理
+                                                                          帖子管理
                             </span>
                             <b class="arrow icon-angle-down"></b>
                         </a>
                         <ul class="submenu">
                             <li>
-                                <a href="faq.html">
+                                <a href="${ctx}/tribune/user/note/create" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
-                                    发布帖子
+                                                                                    发布帖子
                                 </a>
                             </li>
                         </ul>

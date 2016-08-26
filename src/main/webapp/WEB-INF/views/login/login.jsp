@@ -40,7 +40,7 @@
         <div class="main_box">
             <div class="login_box">
                 <div class="login_form">
-                    <form action="${ctx}/outLink/admin/adminLogin.html" id="login_form" method="post">
+                    <form action="${ctx}/admin/adminLogin.html" id="login_form" method="post">
                         <div class="form-group">
                             <label for="username" class="t">邮　箱：</label>
                             <input id="username" value="" name="username" type="text" class="form-control x319 in"

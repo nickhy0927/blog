@@ -1,5 +1,7 @@
 package com.orm.config;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,12 +13,7 @@ public class PageConfig {
 	private String initUserName;
 	private String initPassword;
 	private String pathIgnore;
-
-	private static PageConfig config = null;
-
-	public static PageConfig getPageConfig() {
-		return config;
-	}
+	private List<String> urls;
 
 	public String getIndexUrl() {
 		return indexUrl;
@@ -56,5 +53,13 @@ public class PageConfig {
 
 	public void setPathIgnore(String pathIgnore) {
 		this.pathIgnore = pathIgnore;
+	}
+
+	public List<String> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(List<String> urls) {
+		this.urls = urls;
 	}
 }
