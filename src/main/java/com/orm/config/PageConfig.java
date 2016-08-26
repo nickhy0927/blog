@@ -10,17 +10,11 @@ public class PageConfig {
 	
 	private String indexUrl;
 	private String loginUrl;
+	private String initUserName;
+	private String initPassword;
+	private String pathIgnore;
 
 	private static PageConfig config = null;
-
-	public void init() {
-		logger.info("正在初始化页面配置");
-		if (config == null) {
-			config = (PageConfig) SpringContextHolder.getBean("pageConfig");
-		}
-		logger.info("初始化页面配置成功");
-		System.err.println(config);
-	}
 
 	public static PageConfig getPageConfig() {
 		return config;
@@ -42,8 +36,27 @@ public class PageConfig {
 		this.loginUrl = loginUrl;
 	}
 
-	@Override
-	public String toString() {
-		return "PageConfig [indexUrl=" + indexUrl + ", loginUrl=" + loginUrl + "]";
+	public String getInitPassword() {
+		return initPassword;
+	}
+
+	public String getInitUserName() {
+		return initUserName;
+	}
+
+	public void setInitPassword(String initPassword) {
+		this.initPassword = initPassword;
+	}
+
+	public void setInitUserName(String initUserName) {
+		this.initUserName = initUserName;
+	}
+
+	public String getPathIgnore() {
+		return pathIgnore;
+	}
+
+	public void setPathIgnore(String pathIgnore) {
+		this.pathIgnore = pathIgnore;
 	}
 }

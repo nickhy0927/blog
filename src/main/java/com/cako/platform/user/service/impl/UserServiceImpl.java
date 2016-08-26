@@ -1,5 +1,6 @@
 package com.cako.platform.user.service.impl;
 
+import com.orm.config.PageConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,6 @@ import com.cako.platform.user.service.UserService;
 import com.orm.commons.encryption.MD5Encryption;
 import com.orm.commons.exception.ServiceException;
 import com.orm.commons.service.impl.DefaultAbstractService;
-import com.orm.config.InitEnvironment;
 import com.orm.enums.SysEnum.DeleteStatus;
 import com.orm.enums.SysEnum.Display;
 import com.orm.enums.SysEnum.UserType;
@@ -20,6 +20,9 @@ public class UserServiceImpl extends DefaultAbstractService<User, String> implem
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private PageConfig pageConfig;
 
 	@Override
 	public User findUserByLoginName(String loginName) {
@@ -55,9 +58,8 @@ public class UserServiceImpl extends DefaultAbstractService<User, String> implem
 	 */
 	@Override
 	public User isRoot(String loginName, String password) {
-		InitEnvironment environment = InitEnvironment.getInitEnvironmentInstance();
-		if (StringUtils.isNotEmpty(loginName) && loginName.equals(environment.getInitUsername())) {
-			if (MD5Encryption.MD5(password).equals(MD5Encryption.MD5(environment.getInitPassword()))) {
+		if (StringUtils.isNotEmpty(loginName) && loginName.equals(pageConfig.getInitUserName())) {
+			if (MD5Encryption.MD5(password).equals(MD5Encryption.MD5(pageConfig.getInitPassword()))) {
 				User user = new User();
 				user.setDeleteStatus(DeleteStatus.NO);
 				user.setDisplayStatus(Display.DISPLAY);

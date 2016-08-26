@@ -18,6 +18,7 @@ public class Category extends IdEntity {
 
 	private String name;// 栏目名称
 	private String code;// 栏目编号
+	private Category category;
 
 	private Integer validStatus;
 
@@ -47,5 +48,13 @@ public class Category extends IdEntity {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 }

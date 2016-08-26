@@ -5,23 +5,27 @@
 <hy:extends name="title">博客管理系统</hy:extends>
 <hy:extends name="css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style type="text/css"></style>
+    <style type="text/css">
+        .navbar .navbar-header {
+            margin-bottom: -4px !important;
+        }
+    </style>
 </hy:extends>
 
 <hy:extends name="javascript">
     <script type="text/javascript">
-		$(function(){
-			$(".nav-list").find('li').each(function(){
-				var that = $(this);
-				that.find('a').each(function(){
-					$(this).on('click',function(){
-						console.log($(this));
-						$(".sidebar li").removeClass('active');
-						$(this).addClass('active');
-					});
-				});
-			});
-		});
+        $(function () {
+            $(".nav-list").find('li').each(function () {
+                var that = $(this);
+                that.find('a').each(function () {
+                    $(this).on('click', function () {
+                        console.log($(this));
+                        $(".sidebar li").removeClass('active');
+                        $(this).addClass('active');
+                    });
+                });
+            });
+        });
     </script>
 </hy:extends>
 <hy:extends name="body">
@@ -175,7 +179,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="${ctx}/admin/platform/role/list.html"  target="main_frame">
+                                <a href="${ctx}/admin/platform/role/list.html" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
                                     角色管理
                                 </a>
@@ -200,7 +204,7 @@
                             <li>
                                 <a href="${ctx}/admin/platform/category/categoryList.html" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
-                                                                                       分类管理
+                                    分类管理
                                 </a>
                             </li>
                         </ul>
@@ -254,7 +258,8 @@
 
             <div class="main-content">
                 <div class="page-content" style="padding: 0px;">
-                    <iframe id="main_frame" style="width: 100%" onLoad="reinitIframeEND();" name="main_frame" frameBorder=0 scrolling=no src="${ctx}/admin/home.html"></iframe>
+                    <iframe id="main_frame" style="width: 100%" onLoad="reinitIframeEND();" name="main_frame"
+                            frameBorder=0 scrolling=no src="${ctx}/admin/home.html"></iframe>
                 </div><!-- /.page-content -->
             </div><!-- /.main-content -->
 
@@ -344,16 +349,15 @@
             });
 
             $(window).resize(function () {
-                if(document.body.style.overflow!="hidden"&&document.body.scroll!="no"&&
-                        document.body.scrollHeight>document.body.offsetHeight)
-                {}else
-                {
+                if (document.body.style.overflow != "hidden" && document.body.scroll != "no" &&
+                        document.body.scrollHeight > document.body.offsetHeight) {
+                } else {
                     change();
                 }
             });
         });
 
-        function  change() {
+        function change() {
             var width = $('.page-content').width();
             $("#main_frame").width(width);
         }
@@ -375,11 +379,10 @@
                 var bHeight = iFrame.contentWindow.document.body.scrollHeight;
                 var dHeight = iFrame.contentWindow.document.documentElement.scrollHeight;
                 var height = Math.max(bHeight, dHeight);
-                iFrame.height = height < window.innerHeight ? (window.innerHeight - 70) :height;
-                if(document.body.style.overflow!="hidden"&&document.body.scroll!="no"&&
-                        document.body.scrollHeight>document.body.offsetHeight)
-                {}else
-                {
+                iFrame.height = height < window.innerHeight ? (window.innerHeight - 70) : height;
+                if (document.body.style.overflow != "hidden" && document.body.scroll != "no" &&
+                        document.body.scrollHeight > document.body.offsetHeight) {
+                } else {
                     change();
                 }
             } catch (ex) {

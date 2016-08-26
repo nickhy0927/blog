@@ -3,6 +3,7 @@ package com.orm.config;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -11,6 +12,8 @@ import com.orm.login.SingleLogin;
 
 public class CommonInterceptor extends HandlerInterceptorAdapter {
 
+    @Autowired
+    private PageConfig pageConfig;
 	/**
 	 * 在业务处理器处理请求执行完成后,生成视图之前执行的动作 可在modelAndView中加入数据，比如当前时间
 	 */
@@ -32,19 +35,14 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
-		InitEnvironment environment = InitEnvironment.getInitEnvironmentInstance();
-		if (url.contains(environment.getIgnoreResources()) || url.contains("/login")
-				|| url.contains(environment.getIgnoreOutLinkAddress())) {
-			return true;
-		}
-		if (SingleLogin.isOnline(request.getSession())) {
-			return true;
-		}
-		User user = SingleLogin.getUser(request.getSession());
-		if (user == null) {
-			request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-			return false;
-		} else
-			return true;
+        User user = SingleLogin.getUser(request.getSession());
+        if (url.contains(pageConfig.getPathIgnore())) {
+            return true;
+        }
+        if (user == null || !SingleLogin.isOnline(request.getSession())) {
+            request.getRequestDispatcher("/WEB-INF/views/login/login.jsp").forward(request, response);
+            return false;
+        } else
+            return true;
 	}
 }

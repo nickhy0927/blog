@@ -12,22 +12,22 @@
     	http://www.springframework.org/schema/task/spring-task-3.2.xsd  "
        default-lazy-init="true">
     <description>Spring公共配置</description>
-	<bean class="com.cako.ionic.common.utils.ParseAccessXml" init-method="getServiceObject" lazy-init="false" />
+    <bean class="com.cako.ionic.common.utils.ParseAccessXml" init-method="getServiceObject" lazy-init="false"/>
     <bean id="springContextHolder" class="com.orm.commons.spring.SpringContextHolder" lazy-init="false"/>
     <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
     <context:component-scan base-package="com.cako">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-    
+
     <jpa:repositories base-package="com.cako"
-        transaction-manager-ref="transactionManager"
-        entity-manager-factory-ref="entityManagerFactory"
-        factory-class="com.orm.commons.bean.DefaultRepositoryFactoryBean">
-   	</jpa:repositories>
+                      transaction-manager-ref="transactionManager"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      factory-class="com.orm.commons.bean.DefaultRepositoryFactoryBean">
+    </jpa:repositories>
 
     <!-- JPA实体管理工厂的配置 -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-       	<property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <property name="packagesToScan" value="com.cako"/>
         <!--待扫描的实体类包，不再需要persistence.xml了 -->
@@ -55,39 +55,32 @@
     <!-- 使用annotation定义事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-	<!-- 将多个配置文件位置放到列表中 -->  
-    <bean id="propertyResources" class="java.util.ArrayList">  
-        <constructor-arg>  
-            <list>  
-              <!-- 这里支持多种寻址方式：classpath和file -->  
-              <value>classpath*:/application.development.properties</value>  
-              <!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->  
-              <value>classpath*:/InitEnvironment.properties</value>  
-            </list>  
-        </constructor-arg>  
-    </bean>  
-      
-    <!-- 将配置文件读取到容器中，交给Spring管理 -->  
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
-        <property name="locations" ref="propertyResources" />  
-    </bean>  
-	
-	<!-- <context:property-placeholder location="classpath*:/InitEnvironment.properties" /> -->
-	<bean id="initEnvironment" class="com.orm.config.InitEnvironment" init-method="init" lazy-init="false" scope="">
-	    <property name="outsideOfficeHoursPage" value="${outsideOfficeHoursPage}"/>
-	    <property name="ignoreResources" value="${ignoreResources}"/>
-	    <property name="errorPage" value="${errorPage}" />
-	    <property name="cmsIndex" value="${cmsIndex}"/>
-	    <property name="initPassword" value="${initPassword}"/>
-	    <property name="initUsername" value="${initUsername}"/>
-	    <property name="ignoreOutLinkAddress" value="${ignoreOutLinkAddress}"/>
-	</bean>
-	
-	<bean id="pageConfig" class="com.orm.config.PageConfig" init-method="init" lazy-init="false">
-		<property name="indexUrl" value="/index" />
-		<property name="loginUrl" value="/WEB-INF/view/login" />
-	</bean>
-	
+    <!-- 将多个配置文件位置放到列表中 -->
+    <bean id="propertyResources" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <!-- 这里支持多种寻址方式：classpath和file -->
+                <value>classpath*:/application.development.properties</value>
+                <!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->
+                <!--<value>classpath*:/InitEnvironment.properties</value>  -->
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- 将配置文件读取到容器中，交给Spring管理 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" ref="propertyResources"/>
+    </bean>
+
+
+    <bean id="pageConfig" class="com.orm.config.PageConfig">
+        <property name="indexUrl" value="/index"/>
+        <property name="loginUrl" value="/WEB-INF/view/login"/>
+        <property name="initPassword" value="123456"/>
+        <property name="initUserName" value="root"/>
+        <property name="pathIgnore" value="/static"/>
+    </bean>
+
     <!-- development 环境 -->
     <beans profile="development">
         <!-- <context:property-placeholder ignore-unresolvable="true"  location="classpath*:/application.development.properties"/> -->

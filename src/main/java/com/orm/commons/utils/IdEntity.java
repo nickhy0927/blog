@@ -17,6 +17,7 @@ public class IdEntity {
 	protected Date createTime = new Date();
 	protected String id;// ID
 	protected Date updateTime;
+	protected Integer status;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -62,5 +63,13 @@ public class IdEntity {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

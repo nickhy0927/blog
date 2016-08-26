@@ -36,7 +36,7 @@ public class SingleLogin implements HttpSessionListener {
      * @author HUANGYUAN
      * @TIME:2015年9月28日 下午12:24:29
      * @param request
-     * @param loginName
+     * @param user
      */
     public static void setUser(HttpServletRequest request,User user){
     	HttpSession session = request.getSession();
