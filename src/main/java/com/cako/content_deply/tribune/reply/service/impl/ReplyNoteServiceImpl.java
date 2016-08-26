@@ -3,8 +3,8 @@ package com.cako.content_deply.tribune.reply.service.impl;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cako.basic.tribune.reply.entity.ReplyNote;
-import com.cako.basic.tribune.reply.service.ReplyNoteService;
+import com.cako.content_deply.tribune.reply.entity.ReplyNote;
+import com.cako.content_deply.tribune.reply.service.ReplyNoteService;
 import com.orm.commons.service.impl.DefaultAbstractService;
 
 @Component

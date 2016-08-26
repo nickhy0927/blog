@@ -5,7 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.cako.basic.tribune.note.entity.UserNote;
+import com.cako.content_deply.tribune.note.entity.UserNote;
 import com.cako.platform.user.entity.User;
 import com.cako.platform.utils.BaseEntity;
 

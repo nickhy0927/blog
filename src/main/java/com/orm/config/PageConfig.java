@@ -3,11 +3,9 @@ package com.orm.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.orm.commons.spring.SpringContextHolder;
-
 public class PageConfig {
 	public static final Logger logger = LoggerFactory.getLogger(PageConfig.class);
-	
+
 	private String indexUrl;
 	private String loginUrl;
 	private String initUserName;
