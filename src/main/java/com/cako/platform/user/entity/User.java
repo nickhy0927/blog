@@ -9,11 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.cako.platform.attachment.entity.Attachment;
 import com.cako.platform.role.entity.Role;
 import com.cako.platform.utils.BaseEntity;
 import com.orm.enums.SysEnum;
@@ -29,25 +31,36 @@ public class User extends BaseEntity {
 	private String loginName;// 登录名称
 	private String nickName;// 用户昵称
 	private String password;// 登录密码
-	private String userTag;//用户手机端的标识
+	private String userTag;// 用户手机端的标识
 	private Set<Role> roles = new HashSet<Role>();
 	private Set<User> friends = new HashSet<User>();
 	private String resources = "1";
 	private SysEnum.Status userStatus = Status.INIT;// 用户状态
+	private Attachment attachment;
 
 	private SysEnum.UserType userType = UserType.GENERAL;// 用户类型
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "file_id")
+	public Attachment getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(Attachment attachment) {
+		this.attachment = attachment;
+	}
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "t_p_user_fri", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "fr_id"))
 	public Set<User> getFriends() {
 		return friends;
 	}
-	
+
 	public void setFriends(Set<User> friends) {
 		this.friends = friends;
 	}
-	
+
 	public String getUserTag() {
 		return userTag;
 	}
@@ -76,7 +89,7 @@ public class User extends BaseEntity {
 		return password;
 	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	@JoinTable(name = "t_p_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	public Set<Role> getRoles() {

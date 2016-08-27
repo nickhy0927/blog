@@ -19,7 +19,7 @@
         function deleteInfo(id) {
             if (confirm('确定删除该帖子吗？')) {
                 showdiv();
-                $.get("${ctx}/admin/platform/user/delete/" + id + ".html", function (data) {
+                $.get("${ctx}/admin/platform/user/delete.html?id="+id, function (data) {
                     hidediv();
                     data = JSON.parse(data);
                     if (data.resposecode == '<%=MessageObject.ResponseCode.code_200%>') {
@@ -112,7 +112,7 @@
                                     </c:if>
                                 </td>
                                 <td style="text-align: center;width:140px;">
-                                    <a title="查看" href="${ctx}/tribune/user/note/edit/${note.id}.html">
+                                    <a title="查看" href="${ctx}/tribune/user/note/view.html?id=${note.id}">
                                         <i class="icon-file icon-large"></i>
                                     </a>
                                     <a title="删除" href="javascript:void(0)" onclick="deleteInfo('${note.id}')">

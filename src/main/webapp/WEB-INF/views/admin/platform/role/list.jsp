@@ -17,29 +17,52 @@
             $("#create").click(function () {
                 window.location.href = "${ctx}/admin/platform/role/create.html"
             });
-
-            $('#addMenu').click(function () {
-                d = dialog({
-                    title: '请选择菜单',
-                    fixed: true,
-                    okValue: '确 定',
-                    ok: function () {
-                        return false;
-                    },
-                    cancelValue: '取消',
-                    cancel: function () {
-                        d.close().remove();
-                    }
-                });
-                var menuList = $('#menuList');
-                d.content(menuList);
-                d.showModal();
+            var loading = dialog({
+                width: 30,
+                height: 30,
+                fixed: true
             });
+            $('.ui-dialog').css({
+                'border-radius': 50,
+                'background-color': '#373839',
+                'border': 0
+            })
+            	
         });
+		function addMenus(roleId){
+        	console.log(roleId);
+            var d = dialog({
+                title: '请选择菜单',
+                fixed: true,
+                okValue: '确 定',
+                ok: function () {
+                	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                    var nodes = treeObj.getCheckedNodes(true);
+					var menuIds = "";
+                    for (var i = 0; i < nodes.length; i++) {
+                    	menuIds += nodes[i].id + ",";
+		            }
+                    d.close().remove();
+                    loading.showModal();
+                    $.get("${ctx}/admin/platform/role/addMenuToRole.html?roleId=" + roleId + "&menuIds=" + menuIds,function(res){
+                    	loading.close().remove();
+                    	console.log(res);
+                    });
+                    return false;
+                },
+                cancelValue: '取消',
+                cancel: function () {
+                    d.close().remove();
+                }
+            });
+            var menuList = $('#menuList');
+            d.content(menuList);
+            d.showModal();
+		}
         function deleteInfo(id) {
             if (confirm('确定删除该角色吗？')) {
                 showdiv();
-                $.get("${ctx}/admin/platform/role/delete/" + id + ".html", function (data) {
+                $.get("${ctx}/admin/platform/role/delete.html?id="+id, function (data) {
                     hidediv();
                     data = JSON.parse(data);
                     if (data.resposecode == '<%=MessageObject.ResponseCode.code_200%>') {
@@ -50,11 +73,6 @@
                         return false;
                     }
                 });
-            }
-        }
-        function addPremiss(id) {
-            if (confirm('确定添加权限吗？')) {
-                alert('添加权限成功');
             }
         }
     </script>
@@ -117,9 +135,6 @@
                     </div>
                     <table class="table table-bordered table-responsive table-hover" id="tableList">
                         <tr>
-                            <td class="operate">
-                                <input onclick="selectAll()" type="checkbox" name="checkbox" id="chkAll">
-                            </td>
                             <td class="operate">序号</td>
                             <td>角色编号</td>
                             <td>角色名称</td>
@@ -128,22 +143,19 @@
                         <c:forEach items="${rolesList}" var="role" varStatus="u">
                             <tr>
                                 <td class="operate">
-                                    <input type="checkbox" name="checkbox">
-                                </td>
-                                <td class="operate">
-                                        ${u.index + 1}
+                                    ${u.index + 1}
                                 </td>
                                 <td>${role.code}</td>
                                 <td>${role.name}</td>
                                 <td class="operate">
-                                    <a title="修改" href="${ctx}/admin/platform/role/edit/${role.id}.html">
+                                    <a title="修改" href="${ctx}/admin/platform/role/edit.html?id=${role.id}">
                                         <i class="icon-edit-sign icon-large blue"></i>
                                     </a>
                                     <span title="删除" style="cursor: pointer" href="javascript:void(0)"
                                           onclick="deleteInfo('${role.id}')">
                                         <i class="icon-minus-sign icon-large red"></i>
                                     </span>
-                                    <span title="添加权限" style="cursor: pointer" href="javascript:void(0)" id="addMenu">
+                                    <span title="添加权限" onclick="addMenus('${role.id}')" style="cursor: pointer" href="javascript:void(0)">
                                         <i class="icon-plus-sign-alt icon-large green"></i>
                                     </span>
                                 </td>
@@ -190,29 +202,15 @@
             }
         };
         function onCheck(e, treeId, treeNode) {
-            var treeObj = $.fn.zTree.getZTreeObj("treeDemo"),
+            /* var treeObj = $.fn.zTree.getZTreeObj("treeDemo"),
                     nodes = treeObj.getCheckedNodes(true),
                     v = "";
             for (var i = 0; i < nodes.length; i++) {
                 v += nodes[i].name + ",";
                 alert(nodes[i].id); //获取选中节点的值
-            }
+            } */
         }
-        var zNodes = [
-            {id: 1, pId: 0, name: "随意勾选 1", open: true},
-            {id: 11, pId: 1, name: "随意勾选 1-1", open: true},
-            {id: 111, pId: 11, name: "随意勾选 1-1-1"},
-            {id: 112, pId: 11, name: "随意勾选 1-1-2"},
-            {id: 12, pId: 1, name: "随意勾选 1-2", open: true},
-            {id: 121, pId: 12, name: "随意勾选 1-2-1"},
-            {id: 122, pId: 12, name: "随意勾选 1-2-2"},
-            {id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true},
-            {id: 21, pId: 2, name: "随意勾选 2-1"},
-            {id: 22, pId: 2, name: "随意勾选 2-2", open: true},
-            {id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true},
-            {id: 222, pId: 22, name: "随意勾选 2-2-2"},
-            {id: 23, pId: 2, name: "随意勾选 2-3"}
-        ];
+        var zNodes = ${menuTrees};
 
         $(document).ready(function () {
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);

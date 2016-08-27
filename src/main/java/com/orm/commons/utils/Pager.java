@@ -7,7 +7,7 @@ public class Pager {
 	private int totalPage;// 总页数
 	private int totlaRecord;// 总计路数
 	private int currentPage;// 当前页数
-	private int pageSize = 10;
+	private int pageSize = 9;
 
 	public Pager(String currentPage) {
 		int currentpage = 1;

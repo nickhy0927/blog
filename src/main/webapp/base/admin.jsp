@@ -129,6 +129,20 @@
     <script src="${ctx}/static/admin/js/ace.min.js"></script>
     <script src="${ctx}/static/bootstrap/js/bootstrap.js"></script>
     <script src="${ctx}/static/art-dialog/js/dialog-min.js"></script>
+    <script type="text/javascript">
+    	$(function() {
+    		loading = dialog({
+    	        width: 30,
+    	        height: 30,
+    	        fixed: true
+    	    });
+    	    $('.ui-dialog').css({
+    	        'border-radius': 50,
+    	        'background-color': '#373839',
+    	        'border': 0
+    	    })
+		})
+    </script>
     <!-- 填充javascript的代码 -->
     <hy:block name="javascript"></hy:block>
 

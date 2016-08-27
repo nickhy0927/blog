@@ -42,13 +42,13 @@
                 <div class="login_form">
                     <form action="${ctx}/admin/adminLogin.html" id="login_form" method="post">
                         <div class="form-group">
-                            <label for="username" class="t">邮　箱：</label>
-                            <input id="username" value="" name="username" type="text" class="form-control x319 in"
+                            <label for="username" class="t">登录名：</label>
+                            <input id="username" value="huangyuan" name="username" type="text" class="form-control x319 in"
                                    autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label for="password" class="t">密　码：</label>
-                            <input id="password" value="" name="password" type="password"
+                            <input id="password" value="huangyuan" name="password" type="password"
                                    class="password form-control x319 in">
                         </div>
                         <div class="form-group">

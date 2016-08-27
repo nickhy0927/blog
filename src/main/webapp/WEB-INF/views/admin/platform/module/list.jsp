@@ -18,7 +18,7 @@
         function deleteInfo(id) {
             if (confirm('确定删除该用户吗？')) {
                 showdiv();
-                $.get("${ctx}/admin/platform/user/delete/" + id + ".html", function (data) {
+                $.get("${ctx}/admin/platform/menu/delete.html?id="+id, function (data) {
                     hidediv();
                     data = JSON.parse(data);
                     if (data.resposecode == '<%=MessageObject.ResponseCode.code_200%>') {
@@ -93,9 +93,6 @@
                     </div>
                     <table class="table table-bordered table-responsive table-hover" id="tableList">
                         <tr>
-                            <td class="operate">
-                                <input onclick="selectAll()" type="checkbox" name="checkbox" id="chkAll">
-                            </td>
                             <td class="operate">序号</td>
                             <td style="">菜单名称</td>
                             <td>菜单地址</td>
@@ -123,14 +120,11 @@
                                     </c:choose>
                                 </td>
                                 <td style="text-align: center;width:140px;">
-                                    <a title="修改" href="${ctx}/admin/platform/user/edit/${user.id}.html">
+                                    <a title="修改" href="${ctx}/admin/platform/menu/edit.html?id=${user.id}">
                                         <i class="icon-edit icon-large"></i>
                                     </a>
                                     <a title="删除" href="javascript:void(0)" onclick="deleteInfo('${user.id}')">
                                         <i class="icon-minus-sign icon-large red"></i>
-                                    </a>
-                                    <a href="${ctx}/platform/user/userAddRoles/${user.id}" title="添加角色">
-                                        <i class="icon-plus-sign-alt icon-large green"></i>
                                     </a>
                                 </td>
                             </tr>

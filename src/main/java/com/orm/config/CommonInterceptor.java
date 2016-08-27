@@ -1,6 +1,8 @@
 package com.orm.config;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.cako.init.InitUserInfo;
+import com.cako.platform.menu.entity.Menu;
+import com.cako.platform.role.entity.Role;
 import com.cako.platform.user.entity.User;
 import com.orm.login.SingleLogin;
 
@@ -16,6 +21,9 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	private PageConfig pageConfig;
+
+	@Autowired
+	InitUserInfo initUserInfo;
 
 	/**
 	 * 在业务处理器处理请求执行完成后,生成视图之前执行的动作 可在modelAndView中加入数据，比如当前时间
@@ -51,8 +59,36 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/WEB-INF/views/login/login.jsp").forward(request, response);
 			return false;
 		} else {
+			boolean access = isAccess(user, url);
+			if (pageConfig.getUrls().contains(url)) {
+				return true;
+			}
+			if (!access) {
+				request.setAttribute("url", url);
+				request.getRequestDispatcher("/WEB-INF/views/authentication.jsp").forward(request, response);
+			}
 			SingleLogin.isAlreadyEnter(request.getSession(), user.getLoginName());
 			return true;
 		}
+	}
+
+	private boolean isAccess(User user, String url) {
+		Map<String, User> userMap = initUserInfo.getUserMap();
+		user = userMap.get(user.getLoginName());
+		if (user == null) {
+			return false;
+		}
+		Set<Role> roles = user.getRoles();
+		boolean flag = false;
+		ok: for (Role role : roles) {
+			Set<Menu> menus = role.getMenus();
+			for (Menu menu : menus) {
+				if (url.equals(menu.getHref())) {
+					flag = true;
+					break ok;
+				}
+			}
+		}
+		return flag;
 	}
 }

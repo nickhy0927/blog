@@ -82,10 +82,12 @@
         <property name="urls">
         	<list>
         		<value>/admin/adminLogin.html</value>
+        		<value>/admin/adminIndex.html</value>
+        		<value>/admin/intoLogin.html</value>
         	</list>
         </property>
     </bean>
-
+	<bean class="com.cako.init.InitUserInfo" init-method="contextInitialized" lazy-init="false"/>
     <!-- development 环境 -->
     <beans profile="development">
         <!-- <context:property-placeholder ignore-unresolvable="true"  location="classpath*:/application.development.properties"/> -->

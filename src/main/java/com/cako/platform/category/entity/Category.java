@@ -5,7 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.cako.platform.utils.SysContants;
+import com.cako.platform.utils.SysContants.CategoryType;
 import com.orm.commons.utils.IdEntity;
 
 /**
@@ -21,19 +21,14 @@ public class Category extends IdEntity {
 	private String name;// 栏目名称
 	private String code;// 栏目编号
 	private Category category;
+	private Integer type = CategoryType.COLUMN_1;
 
-	private Integer validStatus;
-
-	static {
-		new Category().setValidStatus(SysContants.RecordType.VALID);
+	public Integer getType() {
+		return type;
 	}
 
-	public Integer getValidStatus() {
-		return validStatus;
-	}
-
-	public void setValidStatus(Integer validStatus) {
-		this.validStatus = validStatus;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public String getName() {

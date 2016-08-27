@@ -22,7 +22,7 @@ public class UserClazz {
 	protected Date updateTime;
 	private String userStatus;// 用户状态
 	private String userType;// 用户类型
-	private String userTag;//用户手机端的标识
+	private String userTag;// 用户手机端的标识
 	private String resources;
 
 	public UserClazz(User user) {
