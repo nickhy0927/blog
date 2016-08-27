@@ -27,13 +27,12 @@ import java.util.Map;
  * Created by Curtain on 2015/9/15.
  */
 @Controller
-@RequestMapping(value = "admin/platform")
 public class MenuController {
 	
 	@Autowired
 	private MenuService menuService;
 	
-    @RequestMapping(value = "menu/create.html")
+    @RequestMapping(value = "/admin/platform/menu/create.html")
     public String create(Model model){
     	try {
 			List<Menu> list = menuService.findAll();
@@ -48,7 +47,7 @@ public class MenuController {
         return "admin/platform/module/create";
     }
     
-    @RequestMapping(value = "menu/save.html",method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/platform/menu/save.html",method = RequestMethod.POST)
     public void menuSave(HttpServletRequest request, Menu menu, HttpServletResponse response){
 		Map<String, Object> map = new HashMap<String, Object>();
     	try {
@@ -73,7 +72,7 @@ public class MenuController {
 		}
     }
     
-    @RequestMapping(value = "menu/list.html",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/admin/platform/menu/list.html",method = {RequestMethod.POST,RequestMethod.GET})
     public String menuList(HttpServletRequest request,Model model){
     	String currentPage = request.getParameter("currentPage");
     	Map<String, Object> map = new HashMap<String,Object>();

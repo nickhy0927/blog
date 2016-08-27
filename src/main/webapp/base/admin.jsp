@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="${ctx}/static/admin/css/ace-ie.min.css" />
     <![endif]-->
     <link rel="stylesheet" href="${ctx}/static/main/css/admin.css">
+    <link rel="stylesheet" href="${ctx}/static/art-dialog/css/ui-dialog.css" />
     <!-- inline styles related to this page -->
     <!-- ace settings handler -->
     <script src="${ctx}/static/admin/js/ace-extra.min.js"></script>
@@ -127,6 +128,7 @@
     <script src="${ctx}/static/admin/js/ace-elements.min.js"></script>
     <script src="${ctx}/static/admin/js/ace.min.js"></script>
     <script src="${ctx}/static/bootstrap/js/bootstrap.js"></script>
+    <script src="${ctx}/static/art-dialog/js/dialog-min.js"></script>
     <!-- 填充javascript的代码 -->
     <hy:block name="javascript"></hy:block>
 
@@ -135,10 +137,9 @@
     <div class="container-fluid">
         <hy:block name="body"></hy:block>
         <div id="bg"></div>
-        <div id="show">测试
-            <input id="btnclose" type="button" value="Close" onclick="hidediv();"/>
+        <div id="show">
+            操作完成
         </div>
-
     </div>
 </body>
 </html>

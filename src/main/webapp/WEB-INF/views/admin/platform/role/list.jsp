@@ -17,16 +17,23 @@
             $("#create").click(function () {
                 window.location.href = "${ctx}/admin/platform/role/create.html"
             });
-            $('#myModal').on('show.bs.modal', function () {
-                // 执行一些动作...
-            });
 
-            $('#myModal').on('shown.bs.modal', function () {
-                // 执行一些动作...
-            });
-            $('#myModal').modal('hide');
-            $('#myModal').on('hide.bs.modal', function () {
-                //alert('嘿，我听说您喜欢模态框...');
+            $('#addMenu').click(function () {
+                d = dialog({
+                    title: '请选择菜单',
+                    fixed: true,
+                    okValue: '确 定',
+                    ok: function () {
+                        return false;
+                    },
+                    cancelValue: '取消',
+                    cancel: function () {
+                        d.close().remove();
+                    }
+                });
+                var menuList = $('#menuList');
+                d.content(menuList);
+                d.showModal();
             });
         });
         function deleteInfo(id) {
@@ -136,9 +143,7 @@
                                           onclick="deleteInfo('${role.id}')">
                                         <i class="icon-minus-sign icon-large red"></i>
                                     </span>
-                                    <span title="添加权限" style="cursor: pointer"
-                                          href="javascript:void(0)" data-toggle="modal"
-                                          data-target="#myModal">
+                                    <span title="添加权限" style="cursor: pointer" href="javascript:void(0)" id="addMenu">
                                         <i class="icon-plus-sign-alt icon-large green"></i>
                                     </span>
                                 </td>
@@ -155,89 +160,63 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div>
-    <!-- 模态框（Modal） -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
-                        允许访问权限
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="zTreeDemoBackground left">
-                        <ul id="treeDemo" class="ztree"></ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        关闭
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        提交更改
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-        <SCRIPT type="text/javascript">
-            function selectAll() {
-                var checklist = document.getElementsByName("checkbox");
-                if (document.getElementById("chkAll").checked) {
-                    for (var i = 0; i < checklist.length; i++) {
-                        checklist[i].checked = 1;
-                    }
-                } else {
-                    for (var j = 0; j < checklist.length; j++) {
-                        checklist[j].checked = 0;
-                    }
-                }
-            }
-            var setting = {
-                check: {
-                    enable: true
-                },
-                data: {
-                    simpleData: {
-                        enable: true
-                    }
-                },
-                callback: {
-                    onCheck: onCheck
-                }
-            };
-            function onCheck(e, treeId, treeNode) {
-                var treeObj = $.fn.zTree.getZTreeObj("treeDemo"),
-                        nodes = treeObj.getCheckedNodes(true),
-                        v = "";
-                for (var i = 0; i < nodes.length; i++) {
-                    v += nodes[i].name + ",";
-                    alert(nodes[i].id); //获取选中节点的值
-                }
-            }
-            var zNodes = [
-                {id: 1, pId: 0, name: "随意勾选 1", open: true},
-                {id: 11, pId: 1, name: "随意勾选 1-1", open: true},
-                {id: 111, pId: 11, name: "随意勾选 1-1-1"},
-                {id: 112, pId: 11, name: "随意勾选 1-1-2"},
-                {id: 12, pId: 1, name: "随意勾选 1-2", open: true},
-                {id: 121, pId: 12, name: "随意勾选 1-2-1"},
-                {id: 122, pId: 12, name: "随意勾选 1-2-2"},
-                {id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true},
-                {id: 21, pId: 2, name: "随意勾选 2-1"},
-                {id: 22, pId: 2, name: "随意勾选 2-2", open: true},
-                {id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true},
-                {id: 222, pId: 22, name: "随意勾选 2-2-2"},
-                {id: 23, pId: 2, name: "随意勾选 2-3"}
-            ];
-
-            $(document).ready(function () {
-                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-            });
-
-        </SCRIPT>
+    <div style="display: none" id="menuList">
+        <ul id="treeDemo" class="ztree"></ul>
     </div>
-    <!-- /.page-content -->
+    <SCRIPT type="text/javascript">
+        function selectAll() {
+            var checklist = document.getElementsByName("checkbox");
+            if (document.getElementById("chkAll").checked) {
+                for (var i = 0; i < checklist.length; i++) {
+                    checklist[i].checked = 1;
+                }
+            } else {
+                for (var j = 0; j < checklist.length; j++) {
+                    checklist[j].checked = 0;
+                }
+            }
+        }
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onCheck: onCheck
+            }
+        };
+        function onCheck(e, treeId, treeNode) {
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo"),
+                    nodes = treeObj.getCheckedNodes(true),
+                    v = "";
+            for (var i = 0; i < nodes.length; i++) {
+                v += nodes[i].name + ",";
+                alert(nodes[i].id); //获取选中节点的值
+            }
+        }
+        var zNodes = [
+            {id: 1, pId: 0, name: "随意勾选 1", open: true},
+            {id: 11, pId: 1, name: "随意勾选 1-1", open: true},
+            {id: 111, pId: 11, name: "随意勾选 1-1-1"},
+            {id: 112, pId: 11, name: "随意勾选 1-1-2"},
+            {id: 12, pId: 1, name: "随意勾选 1-2", open: true},
+            {id: 121, pId: 12, name: "随意勾选 1-2-1"},
+            {id: 122, pId: 12, name: "随意勾选 1-2-2"},
+            {id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true},
+            {id: 21, pId: 2, name: "随意勾选 2-1"},
+            {id: 22, pId: 2, name: "随意勾选 2-2", open: true},
+            {id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true},
+            {id: 222, pId: 22, name: "随意勾选 2-2-2"},
+            {id: 23, pId: 2, name: "随意勾选 2-3"}
+        ];
 
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+    </SCRIPT>
 </hy:extends>
 <jsp:include page="/base/admin.jsp"/>

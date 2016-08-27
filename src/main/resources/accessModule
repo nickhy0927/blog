@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<role>
+    <module id="user">
+        <operate id="save"></operate>
+        <operate id="delete"></operate>
+        <operate id="edit"></operate>
+        <operate id="list"></operate>
+    </module>
+    <module id="role">
+        <operate id="save"></operate>
+        <operate id="delete"></operate>
+        <operate id="edit"></operate>
+        <operate id="list"></operate>
+    </module>
+    <module id="tribune">
+        <operate id="save"></operate>
+        <operate id="delete"></operate>
+        <operate id="edit"></operate>
+        <operate id="list"></operate>
+    </module>
+</role>

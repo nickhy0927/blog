@@ -203,7 +203,7 @@
                             <li>
                                 <a href="${ctx}/admin/platform/category/categoryList.html" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
-                                                                                    分类管理
+                                    分类管理
                                 </a>
                             </li>
                         </ul>
@@ -220,7 +220,7 @@
                             <li>
                                 <a href="faq.html">
                                     <i class="icon-double-angle-right"></i>
-                                                                                    帮助
+                                    帮助
                                 </a>
                             </li>
                         </ul>
@@ -235,9 +235,9 @@
                         </a>
                         <ul class="submenu">
                             <li>
-                                <a href="${ctx}/tribune/user/note/create" target="main_frame">
+                                <a href="${ctx}/tribune/user/note/list.html" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
-                                                                                    发布帖子
+                                    发布帖子
                                 </a>
                             </li>
                         </ul>

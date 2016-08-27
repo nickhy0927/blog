@@ -39,6 +39,5 @@ public class SysContants {
 	public static class RecordType {
 		public static int VALID = 1;// 有效
 		public static int UNVALID = 2;// 无效
-		
 	}
 }

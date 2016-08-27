@@ -30,7 +30,7 @@
         function deleteInfo(id) {
             if (confirm('确定删除该用户吗？')) {
                 showdiv();
-                $.get("${ctx}/admin/platform/user/delete/" + id + ".html", function (data) {
+                $.get("${ctx}/admin/platform/user/delete.html?id="+ id, function (data) {
                     hidediv();
                     data = JSON.parse(data);
                     if (data.resposecode == '<%=MessageObject.ResponseCode.code_200%>') {
@@ -138,13 +138,13 @@
                                     <c:if test="${user.resources == '2'}">客户端</c:if>
                                 </td>
                                 <td style="text-align: center;width:140px;">
-                                    <a title="修改" href="${ctx}/admin/platform/user/edit/${user.id}.html">
+                                    <a title="修改" href="${ctx}/admin/platform/user/edit.html?id=${user.id}">
                                         <i class="icon-edit-sign icon-large blue"></i>
                                     </a>
                                     <a title="删除" href="javascript:void(0)" onclick="deleteInfo('${user.id}')">
                                         <i class="icon-minus-sign icon-large red"></i>
                                     </a>
-                                    <a href="${ctx}/platform/user/userAddRoles/${user.id}" title="添加角色">
+                                    <a href="${ctx}/platform/user/userAddRoles.html?id=${user.id}" title="添加角色">
                                         <i class="icon-plus-sign-alt icon-large green"></i>
                                     </a>
                                 </td>

@@ -39,7 +39,6 @@ import com.orm.enums.SysEnum;
 import com.orm.enums.SysEnum.DeleteStatus;
 
 @Controller
-@RequestMapping(value = "/admin/platform")
 public class UserController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -50,9 +49,10 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/user/userAddRoles/{userId}", method = {RequestMethod.POST, RequestMethod.GET})
-    public String roleList(@PathVariable("userId") String userId, HttpServletRequest request, Model model) {
+    @RequestMapping(value = "/admin/platform/user/userAddRoles.html", method = {RequestMethod.POST, RequestMethod.GET})
+    public String roleList(HttpServletRequest request, Model model) {
         String currentPage = request.getParameter("currentPage");
+        String userId = request.getParameter("userId");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("deleteStatus_eq", DeleteStatus.NO);
         try {
@@ -71,15 +71,16 @@ public class UserController extends BaseController {
         return "platform/user/userAddRole";
     }
 
-    @RequestMapping(value = "/user/create.html")
+    @RequestMapping(value = "/admin/platform/user/create.html")
     public String userCreate(HttpServletRequest request, Model model) {
         List<Map<String, Object>> userTypeList = SysEnum.getUserType();
         request.setAttribute("userTypeList", userTypeList);
         return "admin/platform/user/create";
     }
 
-    @RequestMapping(value = "/user/edit/{id}.html")
-    public String edit(@PathVariable("id") String id, HttpServletRequest request, Model model) {
+    @RequestMapping(value = "/admin/platform/user/edit.html")
+    public String edit(HttpServletRequest request, Model model) {
+        String id = request.getParameter("id");
         if (StringUtils.isNotEmpty(id)) {
             try {
                 User user = userService.get(id);
@@ -94,9 +95,10 @@ public class UserController extends BaseController {
         return "admin/platform/user/create";
     }
 
-    @RequestMapping(value = "/user/delete/{id}.html")
-    public void delete(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/admin/platform/user/delete.html")
+    public void delete(HttpServletRequest request, HttpServletResponse response) {
         MessageObject message = new MessageObject();
+        String id = request.getParameter("id");
         if (StringUtils.isNotEmpty(id)) {
             try {
                 User user = userService.get(id);
@@ -118,9 +120,10 @@ public class UserController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/user/list.html", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/admin/platform/user/list.html", method = {RequestMethod.GET, RequestMethod.POST})
     public String list(HttpServletRequest request, Model model) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
+        String id = request.getParameter("id");
         String currentPage = request.getParameter("currentPage");
         paramMap.put("deleteStatus_eq", SysEnum.DeleteStatus.NO);
         try {
@@ -139,8 +142,9 @@ public class UserController extends BaseController {
         return "admin/platform/user/list";
     }
 
-    @RequestMapping(value = "/user/addRole/{id}", method = RequestMethod.POST)
-    public void addRole(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/admin/platform/user/addRole.html", method = RequestMethod.POST)
+    public void addRole(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("id");
         try {
             String roleIds = request.getParameter("roleIds");
             Set<Role> roles = new HashSet<Role>();
@@ -179,7 +183,7 @@ public class UserController extends BaseController {
 
     }
 
-    @RequestMapping(value = "/user/save.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/platform/user/save.html", method = RequestMethod.POST)
     public void save(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -205,7 +209,7 @@ public class UserController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/user/validLoginName.json", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/admin/platform/user/validLoginName.json", method = {RequestMethod.POST, RequestMethod.GET})
     public void validLoginName(HttpServletRequest request, HttpServletResponse response) {
         String loginName = request.getParameter("param");
         String id = request.getParameter("id");

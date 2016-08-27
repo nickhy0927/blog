@@ -22,6 +22,7 @@ public class UserNote extends IdEntity {
 	private String noteContent;// 帖子的内容
 	private String noteNumber;// 帖子编号
 	private String noteTitle;// 帖子的标题
+	private String isShow;
 	private User user;// 写帖子的人,版主
 
 	@ManyToOne
@@ -67,5 +68,13 @@ public class UserNote extends IdEntity {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getIsShow() {
+		return isShow;
+	}
+
+	public void setIsShow(String isShow) {
+		this.isShow = isShow;
 	}
 }
