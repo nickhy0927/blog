@@ -72,7 +72,7 @@ public class CategoryController {
 					new Sort(Sort.Direction.DESC, "createTime"));
 			model.addAttribute("categoryList", tools.getEntities());
 			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("pager", tools.getEntities().size() > 0 ? tools.getPager() : new Pager(0, "10"));
+			model.addAttribute("pager", tools.getEntities().size() > 0 ? tools.getPager() : new Pager(0, "10", null));
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}

@@ -12,17 +12,17 @@ import org.springframework.stereotype.Service;
 import com.cako.ionic.common.utils.ParseAccessXml;
 import com.cako.ionic.common.utils.RequestData;
 import com.cako.ionic.common.utils.ResponseData.CALLCODE;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.orm.commons.spring.SpringContextHolder;
 import com.orm.commons.utils.JsonMapper;
 
 @Service
 public class CommonReflex {
 
-	public String getObject(HttpServletRequest request) {
+	public String getObject(HttpServletRequest request) throws JsonMappingException {
 		Map<String, Object> requestDataToMap = RequestData.getRequestDataToMap(request);
 		System.out.println(requestDataToMap.toString());
 		Map<String, Object> map = ParseAccessXml.map;
-		System.out.println(requestDataToMap.get("serviceCode"));
 		String serviceCode = requestDataToMap.get("serviceCode").toString();
 		String serviceName = map.get(serviceCode).toString();
 		Object object = SpringContextHolder.getBean(serviceName);
@@ -42,6 +42,9 @@ public class CommonReflex {
 		Object invokeObject;
 		Object result = null;
 		try {
+			requestDataToMap.remove("methodCode");
+			requestDataToMap.remove("serviceCode");
+			requestDataToMap.remove("callback");
 			invokeObject = classType.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			Method method = classType.getMethod(methodName, new Class[] { Map.class });
 			result = method.invoke(invokeObject, new Object[] { requestDataToMap });
@@ -64,7 +67,7 @@ public class CommonReflex {
 			map.put("responseCode", CALLCODE.FAIL);
 			map.put("responseMessage", "操作失败，请稍后再试");
 			result = new JsonMapper().toJson(map);
-		} 
+		}
 		stringBuilder.append(new JsonMapper().toJson(result));
 		stringBuilder.append(")");
 		return stringBuilder.toString();

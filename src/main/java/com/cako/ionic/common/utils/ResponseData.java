@@ -1,12 +1,10 @@
 package com.cako.ionic.common.utils;
 
-import java.util.Map;
-
 public class ResponseData {
 
 	public int responseCode = CALLCODE.SUCCESS;
 	public String responseMessage;
-	public Map<String, Object> resultMap;
+	public Object resultMap;
 
 	public ResponseData() {
 		if (this.responseCode == CALLCODE.SUCCESS) {
@@ -30,6 +28,7 @@ public class ResponseData {
 			setResponseMessage("获取数据成功.");
 		} else {
 			setResponseMessage("获取数据失败，请稍后再试.");
+			setResultMap(null);
 		}
 	}
 
@@ -41,16 +40,17 @@ public class ResponseData {
 		this.responseMessage = responseMessage;
 	}
 
-	public Map<String, Object> getResultMap() {
+	public Object getResultMap() {
 		return resultMap;
 	}
 
-	public void setResultMap(Map<String, Object> resultMap) {
+	public void setResultMap(Object resultMap) {
 		this.resultMap = resultMap;
 	}
 
 	public static interface CALLCODE {
 		public static int FAIL = 2;
 		public static int SUCCESS = 1;
+		public static int NOLOGIN = 3;
 	}
 }

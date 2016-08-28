@@ -84,6 +84,7 @@
         		<value>/admin/adminLogin.html</value>
         		<value>/admin/adminIndex.html</value>
         		<value>/admin/intoLogin.html</value>
+        		<value>/outLink/mobileApp.app</value>
         	</list>
         </property>
     </bean>

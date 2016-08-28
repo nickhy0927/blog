@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <app>
-	<path serviceCode="S00001" serviceName="appUserLoginService">
+	<path serviceCode="S00001" serviceName="ionicUserService">
 		<method methodCode="S00001-M00001">userLogin</method>
 		<method methodCode="S00001-M00002">userInfoList</method>
 		<method methodCode="S00001-M00003">updateUserTag</method>
+	</path>
+	<path serviceCode="S00002" serviceName="appTribuneService">
+		<method methodCode="S00002-M00001">queryTribuneList</method>
+		<method methodCode="S00002-M00002">queryTribuneById</method>
+	</path>
+	<path serviceCode="S00003" serviceName="appReplyService">
+		<method methodCode="S00003-M00001">insertReplyNote</method>
+		<method methodCode="S00003-M00002">queryReplyNoteList</method>
 	</path>
 </app>

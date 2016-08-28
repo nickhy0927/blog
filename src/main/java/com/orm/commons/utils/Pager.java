@@ -17,11 +17,14 @@ public class Pager {
 		this.currentPage = currentpage;
 	}
 
-	public Pager(long totalRecord, String currentPage) {
+	public Pager(long totalRecord, String currentPage, Object pageSize) {
 		this.totlaRecord = (int) totalRecord;
 		int currentpage = 1;
 		if (StringUtils.isNotEmpty(currentPage)) {
 			currentpage = Integer.parseInt(currentPage);
+		}
+		if (pageSize != null) {
+			this.pageSize = Integer.parseInt(pageSize.toString());
 		}
 		this.currentPage = currentpage;
 		int totalPage = (int) totlaRecord / this.pageSize;

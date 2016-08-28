@@ -1,6 +1,8 @@
 package com.cako.content_deply.tribune.note.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -25,7 +27,7 @@ public class UserNote extends IdEntity {
 	private String isShow;
 	private User user;// 写帖子的人,版主
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "category_id")
 	public Category getCategory() {
 		return category;
@@ -48,7 +50,7 @@ public class UserNote extends IdEntity {
 		return noteTitle;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	public User getUser() {
 		return user;

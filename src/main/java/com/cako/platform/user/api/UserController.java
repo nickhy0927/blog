@@ -184,7 +184,7 @@ public class UserController extends BaseController {
 			}
 			model.addAttribute("list", userClazzs);
 			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("pager", users.getEntities().size() > 0 ? users.getPager() : new Pager(0, "10"));
+			model.addAttribute("pager", users.getEntities().size() > 0 ? users.getPager() : new Pager(0, "10", null));
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}

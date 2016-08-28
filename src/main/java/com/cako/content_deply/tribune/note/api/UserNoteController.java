@@ -25,6 +25,7 @@ import com.cako.platform.user.entity.User;
 import com.cako.platform.utils.SysContants;
 import com.cako.platform.utils.SysContants.CategoryType;
 import com.orm.commons.exception.ServiceException;
+import com.orm.commons.utils.JsonMapper;
 import com.orm.commons.utils.MessageObject;
 import com.orm.commons.utils.ObjectTools;
 import com.orm.commons.utils.Pager;
@@ -81,7 +82,7 @@ public class UserNoteController {
 					new Sort(Sort.Direction.DESC, "createTime"));
 			model.addAttribute("notes", tools.getEntities());
 			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("pager", tools.getEntities().size() > 0 ? tools.getPager() : new Pager(0, "10"));
+			model.addAttribute("pager", tools.getEntities().size() > 0 ? tools.getPager() : new Pager(0, "10", null));
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -116,8 +117,9 @@ public class UserNoteController {
 		}
 	}
 
-	@RequestMapping(value = "/tribune/user/tribune/user/note/save.html", method = RequestMethod.POST)
-	public void save(HttpServletRequest request, UserNote userNote) {
+	@RequestMapping(value = "/tribune/user/note/save.html", method = RequestMethod.POST)
+	public void save(HttpServletRequest request, UserNote userNote, HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			String categoryId = request.getParameter("categoryId");
 			User user = SingleLogin.getUser(request.getSession());
@@ -127,9 +129,18 @@ public class UserNoteController {
 				userNote.setStatus(SysContants.RecordType.VALID);
 				userNote.setUser(user);
 				userNoteService.save(userNote);
+				map = SysContants.mapMsg.getMapMsg(true);
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
+			map = SysContants.mapMsg.getMapMsg(false);
+		} finally {
+			response.setHeader("ContentType", "text/html;charset=UTF-8");
+			try {
+				response.getWriter().write(new JsonMapper().toJson(map));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

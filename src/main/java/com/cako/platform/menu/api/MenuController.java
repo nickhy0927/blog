@@ -81,7 +81,7 @@ public class MenuController extends BaseController {
 			for (Menu menu : tools.getEntities()) {
 				menuTrees.add(new MenuTree(menu));
 			}
-			model.addAttribute("pager", tools.getEntities().size() > 0 ? tools.getPager() : new Pager(0, "10"));
+			model.addAttribute("pager", tools.getEntities().size() > 0 ? tools.getPager() : new Pager(0, "10", null));
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("menuTrees", menuTrees);
 		} catch (ServiceException e) {
