@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.cako.platform.attachment.entity.Attachment;
 import com.cako.platform.role.entity.Role;
@@ -24,6 +25,7 @@ import com.orm.enums.SysEnum.UserType;
 
 @Entity
 @Table(name = "t_p_users")
+@Document
 public class User extends BaseEntity {
 
 	private String brithday;// 出生日期

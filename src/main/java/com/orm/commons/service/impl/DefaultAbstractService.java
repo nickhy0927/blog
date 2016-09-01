@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cako.mongo.MongoService;
 import com.orm.commons.exception.ServiceException;
 import com.orm.commons.service.BaseService;
 import com.orm.commons.service.CakoHyJpaRepostiory;
@@ -18,7 +19,7 @@ import com.orm.commons.utils.PageSupport;
 import com.orm.commons.utils.Pager;
 
 @Transactional(readOnly = true)
-public abstract class DefaultAbstractService<E, ID extends Serializable> implements BaseService<E, ID> {
+public abstract class DefaultAbstractService<E, ID extends Serializable> extends MongoService<E, ID> implements BaseService<E, ID> {
 
 	@Autowired
 	private CakoHyJpaRepostiory<E, ID> dao;
@@ -87,8 +88,7 @@ public abstract class DefaultAbstractService<E, ID extends Serializable> impleme
 	}
 
 	@Override
-	public ObjectTools<E> queryPageByMap(Map<String, Object> map, String currentPage, Sort sort)
-			throws ServiceException {
+	public ObjectTools<E> queryPageByMap(Map<String, Object> map, String currentPage, Sort sort) throws ServiceException {
 		List<E> list = queryByMap(map);
 		Object pageSizeObj = map.get("pageSize");
 		Pager pager = new Pager(list.size(), currentPage, pageSizeObj);

@@ -19,10 +19,11 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <jpa:repositories base-package="com.cako"
-                      transaction-manager-ref="transactionManager"
-                      entity-manager-factory-ref="entityManagerFactory"
-                      factory-class="com.orm.commons.bean.DefaultRepositoryFactoryBean">
+    <jpa:repositories 
+        base-package="com.cako"
+        transaction-manager-ref="transactionManager"
+        entity-manager-factory-ref="entityManagerFactory"
+        factory-class="com.orm.commons.bean.DefaultRepositoryFactoryBean">
     </jpa:repositories>
 
     <!-- JPA实体管理工厂的配置 -->
@@ -61,12 +62,15 @@
             <list>
                 <!-- 这里支持多种寻址方式：classpath和file -->
                 <value>classpath*:/application.development.properties</value>
+                <value>classpath*:/mongodb.properties</value>
                 <!-- 推荐使用file的方式引入，这样可以将配置和代码分离 -->
                 <!--<value>classpath*:/InitEnvironment.properties</value>  -->
             </list>
         </constructor-arg>
     </bean>
-
+	
+    <import resource="classpath:mongodb.xml"/>
+    
     <!-- 将配置文件读取到容器中，交给Spring管理 -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations" ref="propertyResources"/>
@@ -85,6 +89,8 @@
         		<value>/admin/adminIndex.html</value>
         		<value>/admin/intoLogin.html</value>
         		<value>/outLink/mobileApp.app</value>
+        		<value>/attachment/uploadFile</value>
+        		<value>/attachment/viewPicture.html</value>
         	</list>
         </property>
     </bean>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -117,10 +118,18 @@ public class UserLoginCotroller {
 		String username = name != null ? (String) name : "";
 		String password = pass != null ? (String) pass : "";
 		User user = userService.findUserByLoginNameAndPassword(username, password);
+		userService.mongoSave(user);
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("loginName", user.getLoginName());
+		List<User> users = userService.mongoQueryByMap(paramsMap);
+		for (Iterator<User> iterator = users.iterator(); iterator.hasNext();) {
+			User u = (User) iterator.next();
+			System.out.println(u);
+		}
 		if (user != null) {
 			SingleLogin.setUser(request, user);
 			return "redirect:/admin/adminIndex.html";
-		} else
-			return "redirect:/admin/intoLogin.html";
+		}
+		return "redirect:/admin/intoLogin.html";
 	}
 }

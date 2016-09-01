@@ -8,10 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.cako.mongo.IMongoService;
 import com.orm.commons.exception.ServiceException;
 import com.orm.commons.utils.ObjectTools;
 
-public abstract interface BaseService<E, ID extends Serializable> {
+public abstract interface BaseService<E, ID extends Serializable> extends IMongoService<E, ID> {
 
 	public abstract void delete(ID id) throws ServiceException;
 
