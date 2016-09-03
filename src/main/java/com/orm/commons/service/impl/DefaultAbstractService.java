@@ -89,8 +89,9 @@ public abstract class DefaultAbstractService<E, ID extends Serializable> extends
 
 	@Override
 	public ObjectTools<E> queryPageByMap(Map<String, Object> map, String currentPage, Sort sort) throws ServiceException {
-		List<E> list = queryByMap(map);
+		map.remove("currentPage");
 		Object pageSizeObj = map.get("pageSize");
+		List<E> list = queryByMap(map);
 		Pager pager = new Pager(list.size(), currentPage, pageSizeObj);
 		int page = 0;
 		if (pager.getCurrentPage() - 1 >= 0) {

@@ -3,11 +3,11 @@ package com.cako.platform.attachment.api;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,26 +21,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cako.deploy.pictures.entity.Picture;
+import com.cako.deploy.pictures.service.PictureService;
 import com.cako.ionic.common.utils.ResponseData;
 import com.cako.ionic.common.utils.ResponseData.CALLCODE;
 import com.cako.platform.attachment.entity.Attachment;
 import com.cako.platform.attachment.service.AttachmentService;
+import com.cako.platform.user.entity.User;
+import com.cako.platform.user.service.UserService;
 import com.orm.commons.exception.ServiceException;
+import com.orm.commons.utils.FileOperateUtil;
 import com.orm.commons.utils.FileTools;
 import com.orm.commons.utils.JsonMapper;
 import com.orm.commons.utils.MyConfig;
+import com.orm.commons.utils.WebUtils;
 
 @Controller
 public class FileUploadController {
 
 	@Autowired
 	private AttachmentService attachmentService;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private PictureService pictureService;
+
 	private static String tempDir = "";
 
 	@RequestMapping(value = "attachment/uploadFile", method = { RequestMethod.POST, RequestMethod.GET })
 	public void upload(MultipartHttpServletRequest request, HttpServletResponse response) {
 		tempDir = request.getSession().getServletContext().getRealPath("/upload/temp");
 		HashMap<String, Object> hashMap = MyConfig.getConfig();
+		Map<String, Object> paramsToMap = WebUtils.getParamsToMap(request);
 		Object object = hashMap.get("upload");
 		if (object != null) {
 			tempDir = object.toString();
@@ -71,6 +85,20 @@ public class FileUploadController {
 				attachmentService.mongoFileUpload(file, "pictures");
 				attachment = attachmentService.save(attachment);
 				attachments.add(attachment);
+				Object idObject = paramsToMap.get("id");
+				Object flag = paramsToMap.get("flag");
+				if (idObject != null) {
+					User user = userService.get(idObject.toString());
+					Picture picture = new Picture();
+					picture.setUser(user);
+					picture.setAttachment(attachment);
+					if (flag != null && "1".equals(flag.toString())) {
+						user.setAttachment(attachment);
+						userService.save(user);
+					} else {
+						pictureService.save(picture);
+					}
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ServiceException e) {
@@ -91,20 +119,18 @@ public class FileUploadController {
 
 	@RequestMapping(value = "/attachment/viewPicture.html")
 	public void viewPicture(HttpServletResponse response, HttpServletRequest request) {
-		String filename = request.getParameter("filename");
-		InputStream inputStream = attachmentService.getMongoFile(filename, "pictures");
+		String downloadfFileName = request.getParameter("filename");
+		InputStream inputStream = attachmentService.getMongoFile(downloadfFileName, "pictures");
 		try {
-			int i = inputStream.available(); // 得到文件大小
-			byte data[] = new byte[i];
-			inputStream.read(data); // 读数据
-			inputStream.close();
-			response.setContentType("image/*"); // 设置返回的文件类型
-			OutputStream toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
-			toClient.write(data); // 输出数据
-			toClient.close();
+			downloadfFileName = new String(downloadfFileName.getBytes("iso-8859-1"), "utf-8");
+			String fileName = downloadfFileName.substring(downloadfFileName.indexOf("_") + 1);
+			String userAgent = request.getHeader("User-Agent");
+			byte[] bytes = userAgent.contains("MSIE") ? fileName.getBytes() : fileName.getBytes("UTF-8");
+			fileName = new String(bytes, "ISO-8859-1");
+			response.setHeader("Content-disposition", String.format("attachment; filename=\"%s\"", fileName));
+			FileOperateUtil.download(inputStream, response.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

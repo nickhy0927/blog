@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.cako.ionic.common.utils.ParseAccessXml;
@@ -27,9 +28,11 @@ public class CommonReflex {
 		String serviceName = map.get(serviceCode).toString();
 		Object object = SpringContextHolder.getBean(serviceName);
 		String className = object.getClass().getName();
-		String callbackFunName = requestDataToMap.get("callback").toString();
+		String callbackFunName = "";
+		if (requestDataToMap.get("callback") != null) {
+			callbackFunName = requestDataToMap.get("callback").toString();
+		}
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(callbackFunName);
 		Class<?> classType = null;
 		try {
 			classType = Class.forName(className);
@@ -61,15 +64,21 @@ public class CommonReflex {
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		}
-		stringBuilder.append("(");
-		if (result == null) {
-			map = new HashMap<String, Object>();
-			map.put("responseCode", CALLCODE.FAIL);
-			map.put("responseMessage", "操作失败，请稍后再试");
-			result = new JsonMapper().toJson(map);
+		if (StringUtils.isNotEmpty(callbackFunName)) {
+			stringBuilder.append(callbackFunName);
+			stringBuilder.append("(");
+			if (result == null) {
+				map = new HashMap<String, Object>();
+				map.put("responseCode", CALLCODE.FAIL);
+				map.put("responseMessage", "操作失败，请稍后再试");
+				result = new JsonMapper().toJson(map);
+			}
+			stringBuilder.append(new JsonMapper().toJson(result));
+			stringBuilder.append(")");
+			return stringBuilder.toString();
+		} else {
+			return result == null ? "" : new JsonMapper().toJson(result);
 		}
-		stringBuilder.append(new JsonMapper().toJson(result));
-		stringBuilder.append(")");
-		return stringBuilder.toString();
+
 	}
 }

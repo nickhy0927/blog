@@ -1,7 +1,6 @@
 package com.cako.platform.attachment.api;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -50,18 +47,16 @@ public class AttachmentController {
 
 	@RequestMapping(value = "/attachment/create")
 	public String create(HttpServletRequest request, Model model) {
-
 		return "platform/attachment/attachmentCreate";
 	}
 
-	@RequestMapping(value = "/attachment/copy", method = RequestMethod.POST)
-	@ResponseBody
-	public String copy(@RequestParam MultipartFile[] myfiles, MultipartHttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/attachment/copy", method = { RequestMethod.POST, RequestMethod.GET })
+	public void copy(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
 		tempDir = request.getSession().getServletContext().getRealPath("/upload/temp");
 		HashMap<String, Object> hashMap = MyConfig.getConfig();
 		Object object = hashMap.get("upload");
 		if (object != null) {
-			tempDir = object.toString();
+			tempDir = object.toString() + File.separatorChar + request.getSession().getId();
 		}
 		if (!new File(tempDir).exists()) {
 			new File(tempDir).mkdirs();
@@ -91,7 +86,7 @@ public class AttachmentController {
 			}
 			versions.add(version);
 		}
-		return new JsonMapper().toJson(versions);
+		response.getWriter().write(new JsonMapper().toJson(versions));
 	}
 
 	@RequestMapping(value = "/attachment/fileUpload", method = RequestMethod.POST)
@@ -106,7 +101,7 @@ public class AttachmentController {
 			if (values != null && values.length > 0) {
 				for (String filePath : values) {
 					File file = new File(filePath);
-					FileInputStream fin = new FileInputStream(file);
+					// FileInputStream fin = new FileInputStream(file);
 					String contentType = new MimetypesFileTypeMap().getContentType(file);
 					long files = FileTools.getFileSizes(file);
 					String fileSize = FileTools.formetFileSize(files);// 文件的大小
@@ -114,9 +109,11 @@ public class AttachmentController {
 					String name = file.getName();
 					name = name.substring(0, name.lastIndexOf("."));
 					String filename = UUID.randomUUID().toString().replaceAll("-", "") + "." + suffix;
-					FileUtils.copyInputStreamToFile(fin, new File(realPath, filename));
-					Attachment attachment = new Attachment(name, "/upload/attachment/" + filename, contentType, fileSize, suffix);
+					// FileUtils.copyInputStreamToFile(fin, new File(realPath,
+					// filename));
+					Attachment attachment = new Attachment(file.getName(), null + filename, contentType, fileSize, suffix);
 					attachment = attachmentService.save(attachment);
+					attachmentService.mongoFileUpload(file, "pictures");
 					versionIds += attachment.getId() + ",";
 				}
 				if (StringUtils.isNotEmpty(versionIds)) {
@@ -140,7 +137,7 @@ public class AttachmentController {
 		}
 	}
 
-	@RequestMapping(value = "/attachment/attachmentList", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/attachment/attachmentList.html", method = { RequestMethod.POST, RequestMethod.GET })
 	public String attachmentList(HttpServletRequest request, HttpServletResponse response, Model model) {
 		String currentPage = request.getParameter("currentPage");
 		Map<String, Object> map = new HashMap<String, Object>();

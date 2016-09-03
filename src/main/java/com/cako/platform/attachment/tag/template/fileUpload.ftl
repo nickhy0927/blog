@@ -5,7 +5,8 @@
 
 <script type="text/javascript" src="${ctx}/static/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
 <script type="text/javascript" src="${ctx}/static/jquery-file-upload/js/jquery.iframe-transport.js"></script>
-<script type="text/javascript" src="${ctx}/static/jquery-file-upload/js/jquery.fileupload.js"></script><style type="text/css">
+<script type="text/javascript" src="${ctx}/static/jquery-file-upload/js/jquery.fileupload.js"></script>
+<style type="text/css">
 	#file-table{
 		margin-top:25px;
 	}
@@ -44,6 +45,7 @@
 			url: '${ctx}/platform/attachment/copy',//上传地址
 			dataType : 'json',
 			done : function(e,data) {//设置文件上传完毕事件的回调函数
+				console.log(data);
 				var content = "";
 				$("#file-table").css("display","block");
 				var json = JSON.stringify(data.result);
@@ -59,6 +61,7 @@
 				$('.progress-bar').css('width','0%');
 			},
 			progressall : function(e, data) {//设置上传进度事件的回调函数
+				console.log(data);
 				$('.progress').css('display','block');
 				var progress = parseInt(data.loaded / data.total * 60, 17);
 				$('.progress-bar').css('width', progress + '%');
@@ -72,7 +75,18 @@
     }
 
     function fileUploadFile(){
-	    mask();
+	    /*mask();*/
+	    var loading = dialog({
+            width: 30,
+            height: 30,
+            fixed: true
+        });
+        loading.showModal();
+        $('.ui-dialog').css({
+            'border-radius': 50,
+            'background-color': '#373839',
+            'border': 0
+        });
     	$.ajax({
   			type: "POST",
   			url: "${ctx}/platform/attachment/fileUpload",
@@ -81,7 +95,8 @@
   			data:$("#fileupload-file").serialize(),// 你的formid
             async: false,
   			success:function(data){
-	  			hiddenMask();
+  				console.log(data);
+	  			loading.close().remove();
   				if(data.resposecode == 200){
   					$("#versionIds").val(data.object);
   					alert(data.message)

@@ -62,7 +62,7 @@
                                     <div class="clearfix">
                                         <span class="pull-left">
                                             <i class="btn btn-xs no-hover btn-pink icon-comment"></i>
-                                            新闻评论
+                                                                                                       新闻评论
                                         </span>
                                         <span class="pull-right badge badge-info">+12</span>
                                     </div>
@@ -203,7 +203,13 @@
                             <li>
                                 <a href="${ctx}/admin/platform/category/categoryList.html" target="main_frame">
                                     <i class="icon-double-angle-right"></i>
-                                    分类管理
+                                                                                    分类管理
+                                </a>
+                            </li>
+                            <li>
+                                <a href="${ctx}/poster/list.html" target="main_frame">
+                                    <i class="icon-double-angle-right"></i>
+                                                                                   广告管理
                                 </a>
                             </li>
                         </ul>

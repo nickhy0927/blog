@@ -41,7 +41,7 @@ public class MobileCotroller {
 	@Autowired
 	public JpushService jpushService;
 
-	@RequestMapping(value = "/mobileApp.app")
+	@RequestMapping(value = "/mobileApp.app", method = { RequestMethod.POST, RequestMethod.GET })
 	public void mobileApp(HttpServletRequest request, HttpServletResponse response) {
 		String result = "";
 		// 这句话的意思，是让浏览器用utf8来解析返回的数据
@@ -100,8 +100,7 @@ public class MobileCotroller {
 
 	public static PushPayload buildPushObject_ios_audienceMore_messageWithExtras() {
 		return PushPayload.newBuilder().setPlatform(Platform.android_ios())
-				.setAudience(Audience.newBuilder().addAudienceTarget(AudienceTarget.tag("tag1", "tag2"))
-						.addAudienceTarget(AudienceTarget.alias("alias1", "alias2")).build())
+				.setAudience(Audience.newBuilder().addAudienceTarget(AudienceTarget.tag("tag1", "tag2")).addAudienceTarget(AudienceTarget.alias("alias1", "alias2")).build())
 				.setMessage(Message.newBuilder().setMsgContent(MSG_CONTENT).addExtra("from", "JPush").build()).build();
 	}
 
@@ -115,11 +114,8 @@ public class MobileCotroller {
 		tagValues.add("huangyuan");
 		tagValues.add("davis");
 		return PushPayload.newBuilder().setPlatform(Platform.android_ios()).setAudience(Audience.tag("huangyuan"))
-				.setNotification(Notification.newBuilder().setAlert(MSG_CONTENT)
-						.addPlatformNotification(AndroidNotification.newBuilder().setTitle(TITLE).build())
-						.addPlatformNotification(
-								IosNotification.newBuilder().incrBadge(1).addExtra("extra_key", "extra_value").build())
-						.build())
+				.setNotification(Notification.newBuilder().setAlert(MSG_CONTENT).addPlatformNotification(AndroidNotification.newBuilder().setTitle(TITLE).build())
+						.addPlatformNotification(IosNotification.newBuilder().incrBadge(1).addExtra("extra_key", "extra_value").build()).build())
 				.build();
 	}
 
@@ -132,14 +128,12 @@ public class MobileCotroller {
 		List<String> tagValues = new ArrayList<String>();
 		tagValues.add("155275097841");
 		tagValues.add("15527509784");
-		return PushPayload.newBuilder().setPlatform(Platform.android()).setAudience(Audience.tag(tagValues))
-				.setNotification(Notification.android(ALERT, TITLE, null)).build();
+		return PushPayload.newBuilder().setPlatform(Platform.android()).setAudience(Audience.tag(tagValues)).setNotification(Notification.android(ALERT, TITLE, null)).build();
 	}
 
 	// 根据别名发送通知
 	public static PushPayload buildPushObject_all_alias_alert() {
-		return PushPayload.newBuilder().setPlatform(Platform.all()).setAudience(Audience.alias("huangyuan"))
-				.setNotification(Notification.alert(ALERT)).build();
+		return PushPayload.newBuilder().setPlatform(Platform.all()).setAudience(Audience.alias("huangyuan")).setNotification(Notification.alert(ALERT)).build();
 	}
 
 	// 向所有的平台发送通知

@@ -126,10 +126,7 @@ public class UserLoginCotroller {
 			User u = (User) iterator.next();
 			System.out.println(u);
 		}
-		if (user != null) {
-			SingleLogin.setUser(request, user);
-			return "redirect:/admin/adminIndex.html";
-		}
-		return "redirect:/admin/intoLogin.html";
+		SingleLogin.setUser(request, user);
+		return "redirect:/admin/adminIndex.html";
 	}
 }

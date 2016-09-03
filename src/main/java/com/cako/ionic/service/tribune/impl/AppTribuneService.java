@@ -8,11 +8,11 @@ import java.util.Map;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.cako.content_deply.tribune.note.entity.UserNote;
-import com.cako.content_deply.tribune.note.entity.UserNoteDto;
-import com.cako.content_deply.tribune.note.service.UserNoteService;
-import com.cako.content_deply.tribune.reply.entity.ReplyNote;
-import com.cako.content_deply.tribune.reply.service.ReplyNoteService;
+import com.cako.deploy.tribune.note.entity.UserNote;
+import com.cako.deploy.tribune.note.entity.UserNoteDto;
+import com.cako.deploy.tribune.note.service.UserNoteService;
+import com.cako.deploy.tribune.reply.entity.ReplyNote;
+import com.cako.deploy.tribune.reply.service.ReplyNoteService;
 import com.cako.ionic.common.utils.ResponseData;
 import com.cako.ionic.service.tribune.IAppTribuneService;
 import com.cako.platform.utils.SysContants;
@@ -52,6 +52,7 @@ public class AppTribuneService extends DefaultAbstractService<UserNote, String> 
 				paramMap.put("userNote.id_eq", userNote.getId());
 				List<ReplyNote> replyNotes = replyNoteService.queryByMap(paramMap);
 				userNotes.add(new UserNoteDto(userNote, replyNotes.size()));
+
 			}
 			response.setResultMap(userNotes);
 			response.setResponseCode(ResponseData.CALLCODE.SUCCESS, true);

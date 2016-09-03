@@ -7,10 +7,10 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.cako.content_deply.tribune.note.dao.UserNoteDao;
-import com.cako.content_deply.tribune.note.entity.UserNote;
-import com.cako.content_deply.tribune.reply.dao.ReplyNoteDao;
-import com.cako.content_deply.tribune.reply.entity.ReplyNote;
+import com.cako.deploy.tribune.note.dao.UserNoteDao;
+import com.cako.deploy.tribune.note.entity.UserNote;
+import com.cako.deploy.tribune.reply.dao.ReplyNoteDao;
+import com.cako.deploy.tribune.reply.entity.ReplyNote;
 import com.cako.ionic.common.utils.ResponseData;
 import com.cako.ionic.common.utils.ResponseData.CALLCODE;
 import com.cako.ionic.service.reply.IAppReplyService;

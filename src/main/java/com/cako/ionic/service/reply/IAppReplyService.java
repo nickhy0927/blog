@@ -2,7 +2,7 @@ package com.cako.ionic.service.reply;
 
 import java.util.Map;
 
-import com.cako.content_deply.tribune.reply.entity.ReplyNote;
+import com.cako.deploy.tribune.reply.entity.ReplyNote;
 import com.cako.ionic.common.utils.ResponseData;
 import com.orm.commons.service.BaseService;
 
