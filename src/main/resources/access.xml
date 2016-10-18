@@ -8,6 +8,8 @@
 	<path serviceCode="S00002" serviceName="appTribuneService">
 		<method methodCode="S00002-M00001">queryTribuneList</method>
 		<method methodCode="S00002-M00002">queryTribuneById</method>
+		<method methodCode="S00002-M00003">queryPicturesByUserId</method>
+		<method methodCode="S00002-M00004">queryTribuneByCategoryList</method>
 	</path>
 	<path serviceCode="S00003" serviceName="appReplyService">
 		<method methodCode="S00003-M00001">insertReplyNote</method>

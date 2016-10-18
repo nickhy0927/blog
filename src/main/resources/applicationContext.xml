@@ -79,7 +79,7 @@
 
     <bean id="pageConfig" class="com.orm.config.PageConfig">
         <property name="indexUrl" value="/index"/>
-        <property name="loginUrl" value="/WEB-INF/view/login"/>
+        <property name="loginUrl" value="/WEB-INF/view/login.jsp"/>
         <property name="initPassword" value="123456"/>
         <property name="initUserName" value="root"/>
         <property name="pathIgnore" value="/static"/>

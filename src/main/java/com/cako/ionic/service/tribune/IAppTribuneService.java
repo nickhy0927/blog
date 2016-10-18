@@ -10,5 +10,9 @@ public interface IAppTribuneService extends BaseService<UserNote, String> {
 
 	public ResponseData queryTribuneList(Map<String, Object> paramsMap);
 
+	public ResponseData queryTribuneByCategoryList(Map<String, Object> paramsMap);
+
 	public ResponseData queryTribuneById(Map<String, Object> paramsMap);
+
+	public ResponseData queryPicturesByUserId(Map<String, Object> paramsMap);
 }

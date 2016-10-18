@@ -29,6 +29,7 @@ import com.cako.platform.attachment.entity.Attachment;
 import com.cako.platform.attachment.service.AttachmentService;
 import com.cako.platform.user.entity.User;
 import com.cako.platform.user.service.UserService;
+import com.cako.platform.utils.SysContants;
 import com.orm.commons.exception.ServiceException;
 import com.orm.commons.utils.FileOperateUtil;
 import com.orm.commons.utils.FileTools;
@@ -83,13 +84,15 @@ public class FileUploadController {
 			try {
 				FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
 				attachmentService.mongoFileUpload(file, "pictures");
-				attachment = attachmentService.save(attachment);
+				attachment.setStatus(SysContants.RecordType.VALID);
 				attachments.add(attachment);
+				attachment = attachmentService.save(attachment);
 				Object idObject = paramsToMap.get("id");
 				Object flag = paramsToMap.get("flag");
 				if (idObject != null) {
 					User user = userService.get(idObject.toString());
 					Picture picture = new Picture();
+					picture.setStatus(SysContants.RecordType.VALID);
 					picture.setUser(user);
 					picture.setAttachment(attachment);
 					if (flag != null && "1".equals(flag.toString())) {

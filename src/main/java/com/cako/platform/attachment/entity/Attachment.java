@@ -3,7 +3,7 @@ package com.cako.platform.attachment.entity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.cako.platform.utils.BaseEntity;
+import com.orm.commons.utils.IdEntity;
 
 /**
  * 附件的大小
@@ -13,7 +13,7 @@ import com.cako.platform.utils.BaseEntity;
  */
 @Entity
 @Table(name = "t_p_attach")
-public class Attachment extends BaseEntity {
+public class Attachment extends IdEntity {
 
 	/**
 	 * 附件的名称

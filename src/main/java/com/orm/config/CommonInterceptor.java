@@ -29,8 +29,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	 * 在业务处理器处理请求执行完成后,生成视图之前执行的动作 可在modelAndView中加入数据，比如当前时间
 	 */
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-			throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		if (modelAndView != null) { // 加入当前时间
 			modelAndView.addObject("SESSIONID", request.getSession().getId().toUpperCase());
 		}
@@ -55,7 +54,9 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		if (user == null) {
-			request.getRequestDispatcher("/WEB-INF/login/login.jsp").forward(request, response);
+			response.getWriter().println("<script>");
+			response.getWriter().println("self.top.location.href='" + request.getContextPath() + "/index.jsp'");
+			response.getWriter().println("</script>");
 			return false;
 		} else {
 			boolean access = isAccess(user, url);
@@ -66,6 +67,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 				request.setAttribute("url", url);
 				request.getRequestDispatcher("/WEB-INF/views/authentication.jsp").forward(request, response);
 			}
+
 			SingleLogin.isAlreadyEnter(request.getSession(), user.getLoginName());
 			return true;
 		}
@@ -74,6 +76,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
 	private boolean isAccess(User user, String url) {
 		Map<String, User> userMap = initUserInfo.getUserMap();
 		user = userMap.get(user.getLoginName());
+
 		if (user == null) {
 			return false;
 		}

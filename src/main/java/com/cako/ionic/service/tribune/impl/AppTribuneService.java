@@ -8,13 +8,19 @@ import java.util.Map;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.cako.deploy.pictures.entity.Picture;
+import com.cako.deploy.pictures.service.PictureService;
 import com.cako.deploy.tribune.note.entity.UserNote;
 import com.cako.deploy.tribune.note.entity.UserNoteDto;
 import com.cako.deploy.tribune.note.service.UserNoteService;
 import com.cako.deploy.tribune.reply.entity.ReplyNote;
 import com.cako.deploy.tribune.reply.service.ReplyNoteService;
 import com.cako.ionic.common.utils.ResponseData;
+import com.cako.ionic.common.utils.ResponseData.CALLCODE;
+import com.cako.ionic.service.tribune.CategoryTribune;
 import com.cako.ionic.service.tribune.IAppTribuneService;
+import com.cako.platform.category.entity.Category;
+import com.cako.platform.category.service.CategoryService;
 import com.cako.platform.utils.SysContants;
 import com.orm.commons.exception.ServiceException;
 import com.orm.commons.service.impl.DefaultAbstractService;
@@ -26,6 +32,8 @@ public class AppTribuneService extends DefaultAbstractService<UserNote, String> 
 
 	private static UserNoteService userNoteService;
 	private static ReplyNoteService replyNoteService;
+	private static PictureService pictureService;
+	private static CategoryService categoryService;
 
 	static {
 		if (replyNoteService == null) {
@@ -33,6 +41,12 @@ public class AppTribuneService extends DefaultAbstractService<UserNote, String> 
 		}
 		if (userNoteService == null) {
 			userNoteService = SpringContextHolder.getBean(UserNoteService.class);
+		}
+		if (pictureService == null) {
+			pictureService = SpringContextHolder.getBean(PictureService.class);
+		}
+		if (categoryService == null) {
+			categoryService = SpringContextHolder.getBean(CategoryService.class);
 		}
 	}
 
@@ -89,6 +103,48 @@ public class AppTribuneService extends DefaultAbstractService<UserNote, String> 
 		} catch (ServiceException e) {
 			e.printStackTrace();
 			response.setResponseCode(ResponseData.CALLCODE.FAIL, false);
+		}
+		return response;
+	}
+
+	@Override
+	public ResponseData queryPicturesByUserId(Map<String, Object> paramsMap) {
+		ResponseData response = new ResponseData();
+		paramsMap.put("status_eq", SysContants.RecordType.VALID);
+		try {
+			paramsMap.put("user.id_eq", paramsMap.get("userId"));
+			paramsMap.remove("userId");
+			Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+			List<Picture> pictures = pictureService.queryByMap(paramsMap, sort);
+			response.setResponseCode(CALLCODE.SUCCESS, true);
+			response.setResultMap(pictures);
+		} catch (ServiceException e) {
+			response.setResponseCode(CALLCODE.FAIL, false);
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@Override
+	public ResponseData queryTribuneByCategoryList(Map<String, Object> paramsMap) {
+		ResponseData response = new ResponseData();
+		Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+		Map<String, Object> cateMap = new HashMap<String, Object>();
+		cateMap.put("status_eq", SysContants.RecordType.VALID);
+		try {
+			List<CategoryTribune> categoryTribunes = new ArrayList<CategoryTribune>();
+			List<Category> categories = categoryService.queryByMap(cateMap, sort);
+			for (Category category : categories) {
+				paramsMap.put("category.id_eq", category.getId());
+				paramsMap.put("status_eq", SysContants.RecordType.VALID);
+				ObjectTools<UserNote> objectTools = userNoteService.queryPageByMap(paramsMap, "1", sort);
+				categoryTribunes.add(new CategoryTribune(category, objectTools.getEntities()));
+			}
+			response.setResultMap(categoryTribunes);
+			response.setResponseCode(CALLCODE.SUCCESS, true);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			response.setResponseCode(CALLCODE.FAIL, false);
 		}
 		return response;
 	}
